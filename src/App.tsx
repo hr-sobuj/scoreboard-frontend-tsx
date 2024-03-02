@@ -1,27 +1,36 @@
-import { useSelector } from "react-redux";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import {
   Routes,
   Route
 } from "react-router-dom";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import HomePage from "./pages/Home";
 import NotFound from "./pages/NotFound";
+import Dashboard from "./pages/Dashboard";
 
-interface userDataType {
+
+
+interface UserDataType {
   username: string,
   token: string
 }
 
+
+
 const App: FC = () => {
-  const userData: userDataType = JSON.parse(localStorage.getItem('userData') || '');
+  const userDataString=localStorage.getItem('userData');
+  const [userData,setUserData]=useState<UserDataType|null>(null);
+  useEffect(()=>{
+    setUserData(userDataString?JSON.parse(userDataString):null);
+  },[userData]);
+
   return (
     <>
       <Routes>
         {userData?.username ? (
           <>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </>
         ) : (
           <>

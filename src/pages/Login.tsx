@@ -1,10 +1,13 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../store/reducer/authReducer';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login: FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate=useNavigate();
     
     const dispatch = useDispatch();
 
@@ -14,6 +17,9 @@ const Login: FC = () => {
           username,password
         }
         dispatch(userLogin(userObject));
+        if(localStorage.getItem('userData')){
+            navigate('/dashboard');
+        }
     };
 
 
@@ -70,9 +76,9 @@ const Login: FC = () => {
                         </div>
 
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                Forgot your password?
-                            </a>
+                            <Link to="/registration" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                Registration
+                            </Link>
                         </div>
                     </div>
 
