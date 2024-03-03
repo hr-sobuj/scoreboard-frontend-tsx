@@ -3,14 +3,13 @@ import { ScoreType } from '../../types/scoreTypes';
 import { CiEdit } from "react-icons/ci";
 import { TiDeleteOutline } from "react-icons/ti";
 import { UserDataType } from "../../App";
+import { Tableprops } from "../../types/TableProps";
+import { useDispatch } from "react-redux";
+import { deleteScore } from "../../store/reducer/scoreReducer";
+import Modal from "../Modal/Modal";
 
 
-interface BatsManProps {
-    data: any,
-    calculateOvers: any
-}
-
-const BatsMan: FC<BatsManProps> = ({ data, calculateOvers }) => {
+const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
 
     const userDataString = localStorage.getItem('userData');
     const [userData, setUserData] = useState<UserDataType | null>(null);
@@ -19,7 +18,9 @@ const BatsMan: FC<BatsManProps> = ({ data, calculateOvers }) => {
         setUserData(userDataString ? JSON.parse(userDataString) : null);
     }, [userDataString]);
 
-    const batsmenScores: ScoreType[] = data.filter((val: any) => val.role === 'bat')
+    const batsmenScores: ScoreType[] = data.filter((val: any) => val.role === 'bat');
+
+    const dispatch=useDispatch();
 
     return (
         <div>
@@ -51,10 +52,17 @@ const BatsMan: FC<BatsManProps> = ({ data, calculateOvers }) => {
                                 {userData && (
                                     <td className="border border-gray-300 px-4 py-2">
                                         <div className="flex space-x-3 justify-center items-center">
-                                            <button>
+                                            <button onClick={()=>{
+                                                <Modal/>
+                                            }}>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
-                                            <button>
+                                            <button onClick={()=>{
+                                                const isDelete=confirm('Are you sure to delete?');
+                                                if(isDelete){
+                                                    dispatch(deleteScore(score._id))
+                                                }
+                                            }}>
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />
                                             </button>
                                         </div>

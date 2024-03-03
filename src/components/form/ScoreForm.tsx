@@ -3,36 +3,44 @@ import InputField from './InputField';
 import { postScore } from '../../store/reducer/scoreReducer';
 import { useDispatch } from 'react-redux';
 
+interface formProps {
+  pName?: string;
+  pB4?: number;
+  pB6?: number;
+  pTotalRun?: number;
+  pTotalBall?: number;
+  pRole?: 'bat' | 'ball';
+}
 
-const ScoreForm: FC = () => {
-  let [name, setName] = useState('');
-  let [b4, setB4] = useState(0);
-  let [b6, setB6] = useState(0);
-  let [totalRun, setTotalRun] = useState(0);
-  let [totalBall, setTotalBall] = useState(0);
-  let [role, setRole] = useState('');
+const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRole }) => {
+  
+  let [name, setName] = useState(pName || '');
+  let [b4, setB4] = useState(pB4 || 0);
+  let [b6, setB6] = useState(pB6 || 0);
+  let [totalRun, setTotalRun] = useState(pTotalRun || 0);
+  let [totalBall, setTotalBall] = useState(pTotalBall || 0);
+  let [role, setRole] = useState(pRole || '');
 
-
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim()) {
       alert('Please enter player name');
       return;
     }
-  
+
     if (b4 < 0 || b6 < 0 || totalRun < 0 || totalBall < 0) {
       alert('Please enter valid numbers for runs and balls');
       return;
     }
-  
+
     if (!['bat', 'ball'].includes(role)) {
       alert('Please select player role');
       return;
     }
-  
+
     const obj = {
       name,
       b4,
@@ -41,10 +49,10 @@ const ScoreForm: FC = () => {
       totalBall,
       role
     };
-  
+
     dispatch(postScore(obj));
   };
-  
+
 
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto shadow-md p-8 bg-white rounded-lg">
@@ -74,7 +82,7 @@ const ScoreForm: FC = () => {
           id="role"
           name="role"
           value={role}
-          onChange={(e)=>setRole(e.target.value)}
+          onChange={(e) => setRole(e.target.value)}
           required
         >
           <option value="">Select player role</option>

@@ -17,3 +17,4 @@ export const postScoreUrl=BaseUrl+'score/create/';
 export const getScoreUrl=BaseUrl+'score/';
 export const getAllScoreUrl=BaseUrl+'score/get/all';
 export const updateScoreUrl=BaseUrl+'score/update/';
+export const deleteScoreUrl=BaseUrl+'score/delete/';

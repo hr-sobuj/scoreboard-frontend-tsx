@@ -1,12 +1,8 @@
 import { FC } from "react";
 import { ScoreType } from "../../types/scoreTypes";
+import { Tableprops } from "../../types/TableProps";
 
-interface BowlerProps {
-    data: any,
-    calculateOvers: any
-}
-
-const Bowler: FC<BowlerProps> = ({ data, calculateOvers }: any) => {
+const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
 
     const bowlersScores:ScoreType[]=data.filter((val:any)=>val.role==='ball');
 
