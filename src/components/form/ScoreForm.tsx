@@ -1,5 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
 import InputField from './InputField';
+import { postScore } from '../../store/reducer/scoreReducer';
+import { useDispatch } from 'react-redux';
 
 
 const ScoreForm: FC = () => {
@@ -10,10 +12,39 @@ const ScoreForm: FC = () => {
   let [totalBall, setTotalBall] = useState(0);
   let [role, setRole] = useState('');
 
+
+  const dispatch=useDispatch();
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
+    
+    if (!name.trim()) {
+      alert('Please enter player name');
+      return;
+    }
+  
+    if (b4 < 0 || b6 < 0 || totalRun < 0 || totalBall < 0) {
+      alert('Please enter valid numbers for runs and balls');
+      return;
+    }
+  
+    if (!['bat', 'ball'].includes(role)) {
+      alert('Please select player role');
+      return;
+    }
+  
+    const obj = {
+      name,
+      b4,
+      b6,
+      totalRun,
+      totalBall,
+      role
+    };
+  
+    dispatch(postScore(obj));
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto shadow-md p-8 bg-white rounded-lg">
@@ -46,6 +77,7 @@ const ScoreForm: FC = () => {
           onChange={(e)=>setRole(e.target.value)}
           required
         >
+          <option value="">Select player role</option>
           <option value="bat">Batsman</option>
           <option value="ball">Bowler</option>
         </select>

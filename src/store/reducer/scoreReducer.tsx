@@ -4,6 +4,15 @@ import axios from "axios";
 import { getAllScoreUrl, postScoreUrl } from "../../constants/app.constants";
 
 
+interface ScorePostType {
+    name: 'string',
+    b4: 0,
+    b6: 0,
+    totalRun: 0,
+    totalBall: 0,
+    role: '',
+}
+
 export interface initalStateType extends commonTypes {
     data: [
         {
@@ -34,6 +43,7 @@ const initialState: initalStateType = {
     error: '',
 }
 
+
 export const fetchScore = createAsyncThunk('score/getScore', async () => {
     try {
         const result = await axios.get(getAllScoreUrl);
@@ -46,9 +56,19 @@ export const fetchScore = createAsyncThunk('score/getScore', async () => {
 });
 
 
-export const postScore = createAsyncThunk('score/postScore', async (scoreObject: initalStateType) => {
+export const postScore = createAsyncThunk('score/postScore', async (scoreObject: ScorePostType) => {
     try {
-        const result = await axios.post(postScoreUrl, scoreObject);
+        const result = await axios.post(postScoreUrl, scoreObject,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
+                }
+            }
+        );
+        console.log(result);
+
+
     } catch (err: any) {
         throw new Error(err.message)
     }

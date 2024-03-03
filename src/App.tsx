@@ -9,7 +9,7 @@ import HomePage from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 
-interface UserDataType {
+export interface UserDataType {
   username: string,
   token: string
 }

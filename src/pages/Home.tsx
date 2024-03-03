@@ -3,6 +3,7 @@ import Bowler from '../components/table/Bowler';
 import BatsMan from '../components/table/BatsMan';
 import { fetchScore } from '../store/reducer/scoreReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../components/nav/Navbar';
 
 
 const HomePage: React.FC = () => {
@@ -23,15 +24,18 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      {isLoading && <p>Loading...</p>}
-      {data.length !== 0 && (<><div className="mb-8">
-        <BatsMan data={data} calculateOvers={calculateOvers} />
+    <>
+      <Navbar />
+      <div className="container mx-auto p-4 my-10">
+        {isLoading && <p>Loading...</p>}
+        {data.length !== 0 && (<><div className="mb-8">
+          <BatsMan data={data} calculateOvers={calculateOvers} />
+        </div>
+          <div>
+            <Bowler data={data} calculateOvers={calculateOvers} />
+          </div></>)}
       </div>
-        <div>
-          <Bowler data={data} calculateOvers={calculateOvers} />
-        </div></>)}
-    </div>
+    </>
   );
 };
 

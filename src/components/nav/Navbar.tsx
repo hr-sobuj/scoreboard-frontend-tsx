@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './../../assets/images/logo.png'
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/reducer/authReducer';
+import { UserDataType } from '../../App';
 
 const Navbar: React.FC = () => {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
-  const handleLogout:Function=()=>{
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout: Function = () => {
     dispatch(logout());
     navigate('/login');
   }
+
+  const userDataString = localStorage.getItem('userData');
+  const [userData, setUserData] = useState<UserDataType | null>(null);
+
+  useEffect(() => {
+    setUserData(userDataString ? JSON.parse(userDataString) : null);
+  }, [userDataString]);
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -22,18 +31,23 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="flex items-center">
-          <a href="#" className="text-white mr-4 hover:text-gray-300">
+          <Link to="/" className="text-white mr-4 hover:text-gray-300">
             Home
-          </a>
-          <a href="#" className="text-white mr-4 hover:text-gray-300">
-            About
-          </a>
-          <a href="#" className="text-white mr-4 hover:text-gray-300">
-            Contact
-          </a>
-          <button onClick={()=>handleLogout()} className="text-white mr-4 hover:text-gray-300">
-            Logout
-          </button>
+          </Link>
+
+          {userData ? (
+            <>
+              <Link to="/dashboard" className="text-white mr-4 hover:text-gray-300">
+                Dashboard
+              </Link>
+              <button onClick={() => handleLogout()} className="text-white mr-4 hover:text-gray-300">
+                Logout
+              </button>
+            </>
+          ) : (<Link to="/login" className="text-white mr-4 hover:text-gray-300">
+            Login
+          </Link>)}
+
         </div>
       </div>
     </nav>
