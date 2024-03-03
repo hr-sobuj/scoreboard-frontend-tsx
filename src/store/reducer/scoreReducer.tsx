@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { commonTypes } from "../../types/commonTypes";
 import axios from "axios";
-import { deleteScoreUrl, getAllScoreUrl, postScoreUrl } from "../../constants/app.constants";
+import { deleteScoreUrl, getAllScoreUrl, postScoreUrl, updateScoreUrl } from "../../constants/app.constants";
 
 
 interface ScoreDeleteType {
@@ -94,9 +94,11 @@ export const deleteScore = createAsyncThunk('score/getScore', async (id:ScoreDel
     }
 });
 
-export const upateScore = createAsyncThunk('score/getScore', async (id:ScoreDeleteType) => {
+export const upateScore = createAsyncThunk('score/updateScore', async (updatedObject:any) => {
     try {
-        const result = await axios.delete(deleteScoreUrl+id,{
+        console.log(updatedObject);
+        
+        const result = await axios.put(updateScoreUrl+updatedObject.id,updatedObject.data,{
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,

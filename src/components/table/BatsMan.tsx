@@ -6,7 +6,7 @@ import { UserDataType } from "../../App";
 import { Tableprops } from "../../types/TableProps";
 import { useDispatch } from "react-redux";
 import { deleteScore } from "../../store/reducer/scoreReducer";
-import Modal from "../Modal/Modal";
+import CustomModal from "../Modal/CustomModal";
 
 
 const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
@@ -26,8 +26,6 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
 
 
     function closeModal() {
-        console.log('checked');
-
         setIsOpen(false)
     }
 
@@ -80,7 +78,7 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />
                                             </button>
                                         </div>
-                                        <Modal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
+                                        <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
                                     </td>
                                 )}
                             </tr>

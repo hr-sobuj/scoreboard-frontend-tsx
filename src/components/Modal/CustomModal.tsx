@@ -1,8 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { FC, FormEvent, Fragment, useState } from 'react'
+import { FC, FormEvent, Fragment, useEffect, useState } from 'react'
 import { TiTimes } from 'react-icons/ti';
 import InputField from '../form/InputField';
 import { useDispatch } from 'react-redux';
+import { upateScore } from '../../store/reducer/scoreReducer';
 
 interface ModalProps {
   isOpen: boolean,
@@ -10,17 +11,24 @@ interface ModalProps {
   closeModal: any,
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
-  console.log(score.name);
-  
-  let [name, setName] = useState(score?.name || '');
-  let [b4, setB4] = useState(score?.b4 || 0);
-  let [b6, setB6] = useState(score?.b6 || 0);
-  let [totalRun, setTotalRun] = useState(score?.totalRun || 0);
-  let [totalBall, setTotalBall] = useState(score?.totalBall || 0);
-  let [role, setRole] = useState(score?.role || '');
+const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
+  const [name, setName] = useState<string>('');
+  const [b4, setB4] = useState<number>(0);
+  const [b6, setB6] = useState<number>(0);
+  const [totalRun, setTotalRun] = useState<number>(0);
+  const [totalBall, setTotalBall] = useState<number>(0);
+  const [role, setRole] = useState<string>('');
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setName(score?.name || '');
+    setB4(score?.b4 || 0);
+    setB6(score?.b6 || 0);
+    setTotalRun(score?.totalRun || 0);
+    setTotalBall(score?.totalBall || 0);
+    setRole(score?.role || '');
+  }, [score]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -41,12 +49,15 @@ const Modal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
     }
 
     const obj = {
-      name,
-      b4,
-      b6,
-      totalRun,
-      totalBall,
-      role
+      id: score._id,
+      data: {
+        name,
+        b4,
+        b6,
+        totalRun,
+        totalBall,
+        role
+      }
     };
 
     dispatch(upateScore(obj));
@@ -55,7 +66,7 @@ const Modal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={()=>false}>
+        <Dialog as="div" className="relative z-10" onClose={() => false}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -100,20 +111,20 @@ const Modal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
                   <div className="mt-2">
                     <form onSubmit={handleSubmit} className="max-w-lg mx-auto shadow-md p-8 bg-white rounded-lg">
                       <div className="mb-4">
-                        <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={setName} />
+                        <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={(value) => setName(value as string)} />
                       </div>
                       <div className="mb-4 grid grid-cols-2 gap-4">
                         <div>
-                          <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={setB4} />
+                          <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={(value) => setB4(value as number)} />
                         </div>
                         <div>
-                          <InputField label="Number of 6" type='number' placeholder='Number of 6' name='b6' value={b6} handleChange={setB6} />
+                          <InputField label="Number of 6" type='number' placeholder='Number of 6' name='b6' value={b6} handleChange={(value) => setB6(value as number)} />
                         </div>
                         <div>
-                          <InputField label="Total Runs" type='number' placeholder='Total Runs' name='totalRun' value={totalRun} handleChange={setTotalRun} />
+                          <InputField label="Total Runs" type='number' placeholder='Total Runs' name='totalRun' value={totalRun} handleChange={(value) => setTotalRun(value as number)} />
                         </div>
                         <div>
-                          <InputField label="Total Balls" type='number' placeholder='Total Balls' name='totalBall' value={totalBall} handleChange={setTotalBall} />
+                          <InputField label="Total Balls" type='number' placeholder='Total Balls' name='totalBall' value={totalBall} handleChange={(value) => setTotalBall(value as number)} />
                         </div>
                       </div>
                       <div className="mb-4">
@@ -153,4 +164,4 @@ const Modal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   )
 }
 
-export default Modal;
+export default CustomModal;
