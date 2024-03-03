@@ -10,6 +10,8 @@ import Modal from "../Modal/Modal";
 
 
 const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
+    let [isOpen, setIsOpen] = useState(false);
+    const [currentScore, setCurrentScore] = useState({})
 
     const userDataString = localStorage.getItem('userData');
     const [userData, setUserData] = useState<UserDataType | null>(null);
@@ -20,7 +22,19 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
 
     const batsmenScores: ScoreType[] = data.filter((val: any) => val.role === 'bat');
 
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
+
+
+    function closeModal() {
+        console.log('checked');
+
+        setIsOpen(false)
+    }
+
+    function openModal(score: any) {
+        setCurrentScore(score);
+        setIsOpen(true)
+    }
 
     return (
         <div>
@@ -52,20 +66,21 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                 {userData && (
                                     <td className="border border-gray-300 px-4 py-2">
                                         <div className="flex space-x-3 justify-center items-center">
-                                            <button onClick={()=>{
-                                                <Modal/>
+                                            <button onClick={() => {
+                                                openModal(score);
                                             }}>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
-                                            <button onClick={()=>{
-                                                const isDelete=confirm('Are you sure to delete?');
-                                                if(isDelete){
+                                            <button onClick={() => {
+                                                const isDelete = confirm('Are you sure to delete?');
+                                                if (isDelete) {
                                                     dispatch(deleteScore(score._id))
                                                 }
                                             }}>
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />
                                             </button>
                                         </div>
+                                        <Modal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
                                     </td>
                                 )}
                             </tr>

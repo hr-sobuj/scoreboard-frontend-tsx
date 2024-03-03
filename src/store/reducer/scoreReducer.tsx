@@ -94,6 +94,21 @@ export const deleteScore = createAsyncThunk('score/getScore', async (id:ScoreDel
     }
 });
 
+export const upateScore = createAsyncThunk('score/getScore', async (id:ScoreDeleteType) => {
+    try {
+        const result = await axios.delete(deleteScoreUrl+id,{
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
+            }
+        });
+        console.log(result);
+        
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+});
+
 export const scoreSlice = createSlice({
     name: "score",
     initialState,

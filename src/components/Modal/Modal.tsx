@@ -1,31 +1,61 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { FC, Fragment, useState } from 'react'
+import { FC, FormEvent, Fragment, useState } from 'react'
+import { TiTimes } from 'react-icons/ti';
+import InputField from '../form/InputField';
+import { useDispatch } from 'react-redux';
 
-const Modal:FC = () => {
-  let [isOpen, setIsOpen] = useState(true)
+interface ModalProps {
+  isOpen: boolean,
+  score: any,
+  closeModal: any,
+}
 
-  function closeModal() {
-    setIsOpen(false)
-  }
+const Modal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
+  console.log(score.name);
+  
+  let [name, setName] = useState(score?.name || '');
+  let [b4, setB4] = useState(score?.b4 || 0);
+  let [b6, setB6] = useState(score?.b6 || 0);
+  let [totalRun, setTotalRun] = useState(score?.totalRun || 0);
+  let [totalBall, setTotalBall] = useState(score?.totalBall || 0);
+  let [role, setRole] = useState(score?.role || '');
 
-  function openModal() {
-    setIsOpen(true)
-  }
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!name.trim()) {
+      alert('Please enter player name');
+      return;
+    }
+
+    if (b4 < 0 || b6 < 0 || totalRun < 0 || totalBall < 0) {
+      alert('Please enter valid numbers for runs and balls');
+      return;
+    }
+
+    if (!['bat', 'ball'].includes(role)) {
+      alert('Please select player role');
+      return;
+    }
+
+    const obj = {
+      name,
+      b4,
+      b6,
+      totalRun,
+      totalBall,
+      role
+    };
+
+    dispatch(upateScore(obj));
+  };
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center">
-        <button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-        >
-          Open dialog
-        </button>
-      </div>
-
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={()=>false}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -52,25 +82,66 @@ const Modal:FC = () => {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
+                    className="text-lg font-medium leading-6 text-gray-900 flex justify-between items-center"
                   >
-                    Payment successful
+                    <div>
+                      Update the Record
+                    </div>
+                    <div>
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={closeModal}
+                      >
+                        <TiTimes />
+                      </button>
+                    </div>
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Got it, thanks!
-                    </button>
+                    <form onSubmit={handleSubmit} className="max-w-lg mx-auto shadow-md p-8 bg-white rounded-lg">
+                      <div className="mb-4">
+                        <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={setName} />
+                      </div>
+                      <div className="mb-4 grid grid-cols-2 gap-4">
+                        <div>
+                          <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={setB4} />
+                        </div>
+                        <div>
+                          <InputField label="Number of 6" type='number' placeholder='Number of 6' name='b6' value={b6} handleChange={setB6} />
+                        </div>
+                        <div>
+                          <InputField label="Total Runs" type='number' placeholder='Total Runs' name='totalRun' value={totalRun} handleChange={setTotalRun} />
+                        </div>
+                        <div>
+                          <InputField label="Total Balls" type='number' placeholder='Total Balls' name='totalBall' value={totalBall} handleChange={setTotalBall} />
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="role">
+                          Role
+                        </label>
+                        <select
+                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          id="role"
+                          name="role"
+                          value={role}
+                          onChange={(e) => setRole(e.target.value)}
+                          required
+                        >
+                          <option value="">Select player role</option>
+                          <option value="bat">Batsman</option>
+                          <option value="ball">Bowler</option>
+                        </select>
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                          type="submit"
+                        >
+                          Update Record
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
