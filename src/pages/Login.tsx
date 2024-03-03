@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../store/reducer/authReducer';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,19 +7,21 @@ const Login: FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const navigate=useNavigate();
-    
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const userObject={
-          username,password
+        const userObject = {
+            username, password
         }
+
         dispatch(userLogin(userObject));
-        if(localStorage.getItem('userData')){
-            navigate('/dashboard');
-        }
+        // const userDataString = localStorage.getItem('userData');
+        // if (userDataString) {
+        //     navigate('/dashboard');
+        // }
     };
 
 

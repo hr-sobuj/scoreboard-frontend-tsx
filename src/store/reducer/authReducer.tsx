@@ -18,7 +18,7 @@ const initialState: authTypes = {
     username: '',
     accessToken: '',
     isLoading: false,
-    error: [],
+    error: '',
 }
 
 
@@ -27,11 +27,11 @@ const initialState: authTypes = {
 | User Registration method
 |--------------------------------------------------------------------------
 */
-export const userRegistration = createAsyncThunk("auth/UserLogin", async (userObject: UserObject) => {
+export const userRegistration = createAsyncThunk("auth/UserRegistration", async (userObject: UserObject) => {
     try {
         const result = await axios.post(RegistrationUrl, userObject);
         if (result.status === 200) {
-            return result.data;
+            return result?.data;
         } else {
             throw new Error("Registration failed!");
         }
@@ -78,24 +78,24 @@ export const authSlice = createSlice({
             state.username = '';
             state.accessToken = '';
             state.isLoading = false;
-            state.error = [];
+            state.error = '';
             localStorage.clear();
         }
     },
     extraReducers: (builder) => {
         builder.addCase(userLogin.pending, (state) => {
             state.isLoading = true;
-            state.error = [];
+            state.error = '';
         });
         builder.addCase(userLogin.fulfilled, (state, { payload }) => {
             state.username = payload?.username || '';
             state.accessToken = payload?.token;
             state.isLoading = false;
-            state.error = [];
+            state.error = '';
         });
         builder.addCase(userLogin.rejected, (state, action) => {
             state.isLoading = false;
-            state.error = [action.error.message]
+            state.error = action.error.message || '';
             state.username = '';
             state.accessToken = '';
         });
