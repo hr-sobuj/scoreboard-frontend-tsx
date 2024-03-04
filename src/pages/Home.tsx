@@ -8,7 +8,7 @@ import { GiConsoleController } from 'react-icons/gi';
 
 
 const HomePage: React.FC = () => {
-  const state: any = useSelector((state: any) => state.score);
+  const state = useSelector((state: any) => state.score);
   const { data, isLoading, error } = state;
 
   const dispatch = useDispatch();
