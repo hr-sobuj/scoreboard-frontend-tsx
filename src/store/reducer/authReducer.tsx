@@ -29,7 +29,11 @@ const initialState: authTypes = {
 */
 export const userRegistration = createAsyncThunk("auth/UserRegistration", async (userObject: UserObject) => {
     try {
-        const result = await axios.post(RegistrationUrl, userObject);
+        const result = await axios.post(RegistrationUrl, userObject, {
+            headers: {
+                'credentials': "include",
+            }
+        });
         if (result.status === 200) {
             return result?.data;
         } else {
@@ -48,7 +52,11 @@ export const userRegistration = createAsyncThunk("auth/UserRegistration", async 
 */
 export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: UserObject) => {
     try {
-        const result = await axios.post(LoginUrl, userObject);
+        const result = await axios.post(LoginUrl, userObject, {
+            headers: {
+                'credentials': "include",
+            }
+        });
         if (result.status === 200) {
 
             const userData = {
@@ -87,18 +95,18 @@ export const authSlice = createSlice({
             state.isLoading = true;
             state.error = '';
         })
-        .addCase(userLogin.fulfilled, (state, { payload }) => {
-            state.username = payload?.username || '';
-            state.accessToken = payload?.token;
-            state.isLoading = false;
-            state.error = '';
-        })
-        .addCase(userLogin.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.error.message || '';
-            state.username = '';
-            state.accessToken = '';
-        });
+            .addCase(userLogin.fulfilled, (state, { payload }) => {
+                state.username = payload?.username || '';
+                state.accessToken = payload?.token;
+                state.isLoading = false;
+                state.error = '';
+            })
+            .addCase(userLogin.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.error.message || '';
+                state.username = '';
+                state.accessToken = '';
+            });
     }
 });
 

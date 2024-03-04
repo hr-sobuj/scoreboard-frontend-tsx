@@ -35,11 +35,9 @@ const App: FC = () => {
         <Route path='/*' element={<ProtectedRoute auth={userData} />}>
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
-        <Route path='/*' element={<PublicRoute auth={userData} />}>
-          <Route path="" element={<HomePage />} />
+        {/* <Route path="" element={<HomePage />} /> */}
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
-        </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

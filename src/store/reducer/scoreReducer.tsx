@@ -39,7 +39,11 @@ const initialState: initalStateType = {
 
 export const fetchScore = createAsyncThunk('score/getScore', async () => {
     try {
-        const result = await axios.get(getAllScoreUrl);
+        const result = await axios.get(getAllScoreUrl, {
+            headers: {
+                'credentials': "include",
+            }
+        });
         if (result.status === 201) {
             return result?.data;
         }
@@ -55,6 +59,7 @@ export const postScore = createAsyncThunk('score/postScore', async (scoreObject:
             {
                 headers: {
                     'Content-Type': 'application/json',
+                    'credentials': "include",
                     Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
                 }
             }
@@ -74,6 +79,7 @@ export const deleteScore = createAsyncThunk('score/deleteScore', async (id:Score
         const result = await axios.delete(deleteScoreUrl+id,{
             headers: {
                 'Content-Type': 'application/json',
+                'credentials': "include",
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
             }
         });
@@ -92,6 +98,7 @@ export const updateScore = createAsyncThunk('score/updateScore', async (updatedO
         const result = await axios.put(updateScoreUrl+updatedObject.id,updatedObject.data,{
             headers: {
                 'Content-Type': 'application/json',
+                'credentials': "include",
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
             }
         });

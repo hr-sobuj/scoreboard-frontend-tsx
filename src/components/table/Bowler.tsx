@@ -46,7 +46,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                             <th className="border border-gray-300 px-4 py-2">Total Runs</th>
                             <th className="border border-gray-300 px-4 py-2">Total Balls</th>
                             <th className="border border-gray-300 px-4 py-2">Overs</th>
-                            <th className="border border-gray-300 px-4 py-2">Role</th>
+                            {/* <th className="border border-gray-300 px-4 py-2">Role</th> */}
                             {userData && (<th className="border border-gray-300 px-4 py-2">Actions</th>)}
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                                 <td className="border border-gray-300 px-4 py-2">{score.totalRun}</td>
                                 <td className="border border-gray-300 px-4 py-2">{score.totalBall}</td>
                                 <td className="border border-gray-300 px-4 py-2">{calculateOvers(score.totalBall)}</td>
-                                <td className="border border-gray-300 px-4 py-2">{score.role}</td>
+                                {/* <td className="border border-gray-300 px-4 py-2">{score.role}</td> */}
                                 {userData && (
                                     <td className="border border-gray-300 px-4 py-2">
                                         <div className="flex space-x-3 justify-center items-center">

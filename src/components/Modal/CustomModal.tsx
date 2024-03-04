@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { FC, FormEvent, Fragment, useEffect, useState } from 'react'
+import { FC, FormEvent, Fragment, forwardRef, useEffect, useState } from 'react'
 import { TiTimes } from 'react-icons/ti';
 import InputField from '../form/InputField';
 import { useDispatch } from 'react-redux';
@@ -11,8 +11,8 @@ interface ModalProps {
   closeModal: any,
 }
 
-const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
-  const [name, setName] = useState<string>(score?.name|| '');
+const CustomModal: FC<ModalProps> = forwardRef(({ isOpen, score, closeModal }) => {
+  const [name, setName] = useState<string>(score?.name || '');
   const [b4, setB4] = useState<number>(0);
   const [b6, setB6] = useState<number>(0);
   const [totalRun, setTotalRun] = useState<number>(0);
@@ -67,7 +67,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={()=>false}>
+        <Dialog as="div" className="relative z-10" onClose={() => false}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -113,10 +113,10 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
                     <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-8 bg-white rounded-lg">
                       <div className="mb-4">
                         <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={setName} />
-                       <input type="text" name="" id="" />
                       </div>
                       <div className="mb-4 grid grid-cols-2 gap-4">
                         <div>
+                          {/* <input type="text" /> */}
                           <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={setB4} />
                         </div>
                         <div>
@@ -164,6 +164,6 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
       </Transition>
     </>
   )
-}
+})
 
 export default CustomModal;
