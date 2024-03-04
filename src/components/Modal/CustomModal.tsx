@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { updateScore } from '../../store/reducer/scoreReducer';
 
 interface ModalProps {
+  ref:any,
   isOpen: boolean,
   score: any,
   closeModal: any,
