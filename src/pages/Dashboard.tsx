@@ -19,12 +19,6 @@ const Dashboard: FC = () => {
         dispatch(fetchScore());
     }, []);
 
-    useEffect(() => {
-        if (data) {
-            setLocalData(data);
-        }
-    }, [state]);
-
     const calculateOvers = (balls: number): string => {
         const overs = Math.floor(balls / 6);
         const ballsLeft = balls % 6;
@@ -39,10 +33,10 @@ const Dashboard: FC = () => {
             </div>
             <div className="container mx-auto p-4 my-10 flex flex-col space-y-6">
                 <div>
-                    <BatsMan data={localData} calculateOvers={calculateOvers} />
+                    <BatsMan data={data} calculateOvers={calculateOvers} />
                 </div>
                 <div>
-                    <Bowler data={localData} calculateOvers={calculateOvers} />
+                    {/* <Bowler data={localData} calculateOvers={calculateOvers} /> */}
                 </div>
             </div>
         </>

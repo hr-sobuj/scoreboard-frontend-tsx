@@ -18,7 +18,7 @@ interface ScorePostType {
 }
 
 export interface initalStateType extends commonTypes {
-    data: [
+    data: 
         {
             _id?: string,
             name: string,
@@ -27,22 +27,11 @@ export interface initalStateType extends commonTypes {
             totalRun: number,
             totalBall: number,
             role: string,
-        }
-    ]
+        }[];
 }
 
 const initialState: initalStateType = {
-    data: [
-        {
-            _id: '',
-            name: 'string',
-            b4: 0,
-            b6: 0,
-            totalRun: 0,
-            totalBall: 0,
-            role: '',
-        }
-    ],
+    data: [],
     isLoading: false,
     error: '',
 }
@@ -106,7 +95,11 @@ export const updateScore = createAsyncThunk('score/updateScore', async (updatedO
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
             }
         });
-        return result?.data?.data;
+        const obj={
+            id:updatedObject.id,
+            data:result?.data?.data
+        }
+        return obj;
         
     } catch (error: any) {
         throw new Error(error.message)
@@ -146,7 +139,8 @@ export const scoreSlice = createSlice({
                 state.error = '';
             })
             .addCase(postScore.fulfilled, (state,action) => {
-                state.data.push=action.payload
+                console.log(action.payload);
+                state.data.push(action.payload);
                 state.isLoading = false;
                 state.error = '';
             })
@@ -172,7 +166,8 @@ export const scoreSlice = createSlice({
                 state.error = '';
             })
             .addCase(updateScore.fulfilled, (state,action) => {
-                state.data.push=action.payload;
+                const updateIndex=state.data.findIndex((val)=>val._id===action.payload.id);
+                state.data.splice(updateIndex,1,action.payload.data);
                 state.isLoading = false;
                 state.error = '';
             })

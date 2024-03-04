@@ -7,6 +7,7 @@ import { Tableprops } from "../../types/TableProps";
 import { useDispatch } from "react-redux";
 import { deleteScore } from "../../store/reducer/scoreReducer";
 import CustomModal from "../Modal/CustomModal";
+import UpdateModal from "../Modal/UpdateModal";
 
 
 const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
@@ -19,7 +20,7 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
     useEffect(() => {
         setUserData(userDataString ? JSON.parse(userDataString) : null);
     }, [userDataString]);
-    
+
     const batsmenScores: ScoreType[] = data?.filter((val: any) => val.role === 'bat');
 
     const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
         setCurrentScore(score);
         setIsOpen(true)
     }
+
 
     return (
         <div>
@@ -70,7 +72,8 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
 
-                                        <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
+                                            <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
+                                            {/* <UpdateModal isOpen={isOpen} closeModal={closeModal} score={currentScore} /> */}
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
                                                 if (isDelete) {

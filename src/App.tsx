@@ -22,8 +22,6 @@ const App: FC = () => {
   const [userData, setUserData] = useState<UserDataType | null>(null);
 
   useEffect(() => {
-    console.log(userData);
-
     setUserData(userDataString ? JSON.parse(userDataString) : null);
   }, [userDataString]);
   return (
