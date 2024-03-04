@@ -36,7 +36,7 @@ const Dashboard: FC = () => {
                     <BatsMan data={data} calculateOvers={calculateOvers} />
                 </div>
                 <div>
-                    {/* <Bowler data={localData} calculateOvers={calculateOvers} /> */}
+                    <Bowler data={data} calculateOvers={calculateOvers} />
                 </div>
             </div>
         </>

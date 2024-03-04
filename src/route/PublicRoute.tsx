@@ -1,5 +1,7 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 export default function PublicRoute({auth}:any) {
-    return auth===null?<Outlet />:<Navigate to="/dashboard" />
+    const location=useLocation();
+    console.log(location);
+    return auth===null?<Outlet />:<Navigate to={location.pathname}/>;
 }

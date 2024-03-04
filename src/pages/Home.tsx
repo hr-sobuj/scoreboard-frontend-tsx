@@ -9,19 +9,14 @@ import { GiConsoleController } from 'react-icons/gi';
 
 const HomePage: React.FC = () => {
   const state: any = useSelector((state: any) => state.score);
-  let [localState,setLocalState]=useState([]);
   const { data, isLoading, error } = state;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchScore());
-    setLocalState(data);
   }, []);
 
-  useEffect(() => {
-    setLocalState(state.data);
-  }, [state]);
 
   const calculateOvers = (balls: number): string => {
     const overs = Math.floor(balls / 6);
@@ -35,10 +30,10 @@ const HomePage: React.FC = () => {
       <div className="container mx-auto p-4 my-10">
         {isLoading && <p>Loading...</p>}
         {data?.length !== 0 && (<><div className="mb-8">
-          <BatsMan data={localState} calculateOvers={calculateOvers} />
+          <BatsMan data={data} calculateOvers={calculateOvers} />
         </div>
           <div>
-            {/* <Bowler data={localState} calculateOvers={calculateOvers} /> */}
+            <Bowler data={data} calculateOvers={calculateOvers} />
           </div></>)}
       </div>
     </>

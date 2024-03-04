@@ -2,7 +2,8 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import {
   Routes,
-  Route
+  Route,
+  useLocation
 } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 import HomePage from "./pages/Home";
@@ -24,6 +25,9 @@ const App: FC = () => {
   useEffect(() => {
     setUserData(userDataString ? JSON.parse(userDataString) : null);
   }, [userDataString]);
+
+  
+
   return (
     <>
       <Routes>
@@ -32,6 +36,7 @@ const App: FC = () => {
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
         <Route path='/*' element={<PublicRoute auth={userData} />}>
+          <Route path="" element={<HomePage />} />
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />
         </Route>

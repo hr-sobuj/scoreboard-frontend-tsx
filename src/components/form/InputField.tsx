@@ -24,9 +24,10 @@ const InputField: FC<InputFieldProps> = ({ label, type, name, value, placeholder
                 type={type}
                 placeholder={placeholder}
                 name={name}
-                value={value}
+                defaultValue={value}
                 onChange={(e) => inputHandler(e)}
                 required
+                autoFocus
             />
         </div>
     );
