@@ -13,8 +13,6 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
     let [isOpen, setIsOpen] = useState(false);
     const [currentScore, setCurrentScore] = useState({});
 
-    const ref=useRef();
-
     const userDataString = localStorage.getItem('userData');
     const [userData, setUserData] = useState<UserDataType | null>(null);
 
@@ -28,12 +26,14 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
 
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
     function openModal(score: any) {
         setCurrentScore(score);
-        setIsOpen(true)
+        setTimeout(() => {
+            setIsOpen(true);
+        }, 100);
     }
 
 
@@ -73,7 +73,6 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
 
-                                            <CustomModal ref={ref} isOpen={isOpen} closeModal={closeModal} score={currentScore} />
                                             {/* <UpdateModal isOpen={isOpen} closeModal={closeModal} score={currentScore} /> */}
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
@@ -90,6 +89,8 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                         ))}
                     </tbody>
                 </table>
+                <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
+
             </div>
         </div>
     )

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Bowler from '../components/table/Bowler';
 import BatsMan from '../components/table/BatsMan';
 import { fetchScore } from '../store/reducer/scoreReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import Navbar from '../components/nav/Navbar';
-import { GiConsoleController } from 'react-icons/gi';
+import { AppDispatch, RootState } from '../store/store';
 
 
 const HomePage: React.FC = () => {
-  const state = useSelector((state: any) => state.score);
-  const { data, isLoading, error } = state;
+  const state = useSelector((state: RootState) => state.score);
+  const { data, isLoading } = state;
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchScore());

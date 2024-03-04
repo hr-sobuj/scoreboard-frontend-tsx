@@ -4,23 +4,25 @@ import { TiTimes } from 'react-icons/ti';
 import InputField from '../form/InputField';
 import { useDispatch } from 'react-redux';
 import { updateScore } from '../../store/reducer/scoreReducer';
+import { AppDispatch } from '../../store/store';
 
 interface ModalProps {
-  ref:any,
   isOpen: boolean,
   score: any,
   closeModal: any,
 }
 
-const CustomModal: FC<ModalProps> = forwardRef(({ isOpen, score, closeModal },ref) => {
-  const [name, setName] = useState<string>(score?.name || '');
-  const [b4, setB4] = useState<number>(0);
-  const [b6, setB6] = useState<number>(0);
-  const [totalRun, setTotalRun] = useState<number>(0);
-  const [totalBall, setTotalBall] = useState<number>(0);
-  const [role, setRole] = useState<string>('');
+const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
+  console.log(score);
+  const [name, setName] = useState<string>(score?.name ?? '');
+  const [b4, setB4] = useState<number>(score?.b4 ?? 0);
+  const [b6, setB6] = useState<number>(score?.b6 ?? 0);
+  const [totalRun, setTotalRun] = useState<number>(score?.totalRun ?? 0);
+  const [totalBall, setTotalBall] = useState<number>(score?.totalBall ?? 0);
+  const [role, setRole] = useState<string>(score.role ?? '');
 
-  const dispatch = useDispatch();
+
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     setName(score?.name || '');
@@ -165,6 +167,6 @@ const CustomModal: FC<ModalProps> = forwardRef(({ isOpen, score, closeModal },re
       </Transition>
     </>
   )
-})
+}
 
 export default CustomModal;
