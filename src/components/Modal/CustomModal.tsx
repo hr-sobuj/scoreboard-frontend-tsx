@@ -11,7 +11,7 @@ interface ModalProps {
   closeModal: any,
 }
 
-const CustomModal: FC<ModalProps> = forwardRef(({ isOpen, score, closeModal }) => {
+const CustomModal: FC<ModalProps> = forwardRef(({ isOpen, score, closeModal },ref) => {
   const [name, setName] = useState<string>(score?.name || '');
   const [b4, setB4] = useState<number>(0);
   const [b6, setB6] = useState<number>(0);
