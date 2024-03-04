@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./route/ProtectedRoute";
 import { useSelector } from "react-redux";
+import PublicRoute from "./route/PublicRoute";
 
 export interface UserDataType {
   username: string,
@@ -21,16 +22,20 @@ const App: FC = () => {
   const [userData, setUserData] = useState<UserDataType | null>(null);
 
   useEffect(() => {
+    console.log(userData);
+
     setUserData(userDataString ? JSON.parse(userDataString) : null);
   }, [userDataString]);
   return (
     <>
       <Routes>
         <Route path='/' index element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/registration" element={<Registration />} />
         <Route path='/*' element={<ProtectedRoute auth={userData} />}>
           <Route path="dashboard" element={<Dashboard />} />
+        </Route>
+        <Route path='/*' element={<PublicRoute auth={userData} />}>
+          <Route path="login" element={<Login />} />
+          <Route path="registration" element={<Registration />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

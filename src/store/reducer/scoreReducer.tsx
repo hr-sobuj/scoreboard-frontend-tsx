@@ -70,7 +70,10 @@ export const postScore = createAsyncThunk('score/postScore', async (scoreObject:
                 }
             }
         );
-        console.log(result);
+        // console.log(result);
+        if(result.status===200){
+            return result?.data?.data;
+        }
         
     } catch (err: any) {
         throw new Error(err.message)
@@ -86,7 +89,9 @@ export const deleteScore = createAsyncThunk('score/deleteScore', async (id:Score
             }
         });
         
-        console.log(result);
+        if(result.status===201){
+            return id;
+        }
         
     } catch (error: any) {
         throw new Error(error.message)
@@ -135,12 +140,13 @@ export const scoreSlice = createSlice({
                 }];
                 state.isLoading = false;
                 state.error = action.error.message || '';
-            })
+            })            
             .addCase(postScore.pending, (state) => {
                 state.isLoading = true;
                 state.error = '';
             })
-            .addCase(postScore.fulfilled, (state) => {
+            .addCase(postScore.fulfilled, (state,action) => {
+                state.data.push=action.payload
                 state.isLoading = false;
                 state.error = '';
             })
@@ -152,7 +158,8 @@ export const scoreSlice = createSlice({
                 state.isLoading = true;
                 state.error = '';
             })
-            .addCase(deleteScore.fulfilled, (state) => {
+            .addCase(deleteScore.fulfilled, (state,action) => {
+                state.data=state.data.filter((val)=>val._id!==action.payload);
                 state.isLoading = false;
                 state.error = '';
             })

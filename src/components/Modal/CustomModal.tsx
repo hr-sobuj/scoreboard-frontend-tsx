@@ -113,7 +113,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
                     <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-8 bg-white rounded-lg">
                       <div className="mb-4">
                         <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={setName} />
-                       
+                       <input type="text" name="" id="" />
                       </div>
                       <div className="mb-4 grid grid-cols-2 gap-4">
                         <div>
