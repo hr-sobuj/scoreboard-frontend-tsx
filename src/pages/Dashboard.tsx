@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import Navbar from "../components/nav/Navbar";
 import ScoreForm from "../components/form/ScoreForm";
 import BatsMan from "../components/table/BatsMan";
@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchScore } from "../store/reducer/scoreReducer";
 
 const Dashboard: FC = () => {
+    const [localData, setLocalData] = useState([]);
+
     const state: any = useSelector((state: any) => state.score);
 
     const { data, isLoading, error } = state;
@@ -16,6 +18,12 @@ const Dashboard: FC = () => {
     useEffect(() => {
         dispatch(fetchScore());
     }, []);
+
+    useEffect(() => {
+        if (data) {
+            setLocalData(data);
+        }
+    }, [state]);
 
     const calculateOvers = (balls: number): string => {
         const overs = Math.floor(balls / 6);
@@ -31,10 +39,10 @@ const Dashboard: FC = () => {
             </div>
             <div className="container mx-auto p-4 my-10 flex flex-col space-y-6">
                 <div>
-                    <BatsMan data={data} calculateOvers={calculateOvers} />
+                    <BatsMan data={localData} calculateOvers={calculateOvers} />
                 </div>
                 <div>
-                    <Bowler data={data} calculateOvers={calculateOvers} />
+                    <Bowler data={localData} calculateOvers={calculateOvers} />
                 </div>
             </div>
         </>

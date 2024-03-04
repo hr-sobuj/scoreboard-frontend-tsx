@@ -3,7 +3,7 @@ import { FC, FormEvent, Fragment, useEffect, useState } from 'react'
 import { TiTimes } from 'react-icons/ti';
 import InputField from '../form/InputField';
 import { useDispatch } from 'react-redux';
-import { upateScore } from '../../store/reducer/scoreReducer';
+import { updateScore } from '../../store/reducer/scoreReducer';
 
 interface ModalProps {
   isOpen: boolean,
@@ -60,7 +60,8 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
       }
     };
 
-    dispatch(upateScore(obj));
+    dispatch(updateScore(obj));
+    closeModal();
   };
 
   return (
@@ -109,22 +110,23 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
                     </div>
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form onSubmit={handleSubmit} className="max-w-lg mx-auto shadow-md p-8 bg-white rounded-lg">
+                    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-8 bg-white rounded-lg">
                       <div className="mb-4">
-                        <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={(value) => setName(value as string)} />
+                        <InputField label="Name" type='text' placeholder='Player name' name='name' value={name} handleChange={setName} />
+                       
                       </div>
                       <div className="mb-4 grid grid-cols-2 gap-4">
                         <div>
-                          <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={(value) => setB4(value as number)} />
+                          <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={setB4} />
                         </div>
                         <div>
-                          <InputField label="Number of 6" type='number' placeholder='Number of 6' name='b6' value={b6} handleChange={(value) => setB6(value as number)} />
+                          <InputField label="Number of 6" type='number' placeholder='Number of 6' name='b6' value={b6} handleChange={setB6} />
                         </div>
                         <div>
-                          <InputField label="Total Runs" type='number' placeholder='Total Runs' name='totalRun' value={totalRun} handleChange={(value) => setTotalRun(value as number)} />
+                          <InputField label="Total Runs" type='number' placeholder='Total Runs' name='totalRun' value={totalRun} handleChange={setTotalRun} />
                         </div>
                         <div>
-                          <InputField label="Total Balls" type='number' placeholder='Total Balls' name='totalBall' value={totalBall} handleChange={(value) => setTotalBall(value as number)} />
+                          <InputField label="Total Balls" type='number' placeholder='Total Balls' name='totalBall' value={totalBall} handleChange={setTotalBall} />
                         </div>
                       </div>
                       <div className="mb-4">

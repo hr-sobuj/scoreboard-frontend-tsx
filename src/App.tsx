@@ -8,6 +8,8 @@ import { FC, useEffect, useState } from "react";
 import HomePage from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./route/ProtectedRoute";
+import { useSelector } from "react-redux";
 
 export interface UserDataType {
   username: string,
@@ -15,26 +17,20 @@ export interface UserDataType {
 }
 
 const App: FC = () => {
-  const userDataString=localStorage.getItem('userData');
-  const [userData,setUserData]=useState<UserDataType|null>(null);
-  useEffect(()=>{
-    setUserData(userDataString?JSON.parse(userDataString):null);
-  },[userDataString]);
-
+  const state = useSelector((state: any) => state?.auth);
+  const [isAuth, setIsAuth] = useState(false);
+  useEffect(() => {
+    setIsAuth(state.username.length ? true : false);
+  }, [state]);
   return (
     <>
       <Routes>
-        {userData?.username ? (
-          <>
-            <Route path="/dashboard" element={<Dashboard />} />
-          </>
-        ) : (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/registration" element={<Registration />} />
-          </>
-        )}
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' index element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path='/*' element={<ProtectedRoute auth={isAuth} />}>
+          <Route path="dashboard" element={<Dashboard />} />
+        </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../store/reducer/authReducer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, redirect } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
 
 const Login: FC = () => {
@@ -19,11 +19,16 @@ const Login: FC = () => {
         }
 
         dispatch(userLogin(userObject));
-        // const userDataString = localStorage.getItem('userData');
-        // if (userDataString) {
-        //     navigate('/dashboard');
-        // }
     };
+
+    const currentUser=useSelector((state:any)=>state?.auth);
+
+    useEffect(() => {
+        if (currentUser.username) {
+            navigate('/dashboard', { replace: true });
+        }
+    }, [currentUser]);
+    
 
 
     return (
