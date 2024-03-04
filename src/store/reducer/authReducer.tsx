@@ -86,14 +86,14 @@ export const authSlice = createSlice({
         builder.addCase(userLogin.pending, (state) => {
             state.isLoading = true;
             state.error = '';
-        });
-        builder.addCase(userLogin.fulfilled, (state, { payload }) => {
+        })
+        .addCase(userLogin.fulfilled, (state, { payload }) => {
             state.username = payload?.username || '';
             state.accessToken = payload?.token;
             state.isLoading = false;
             state.error = '';
-        });
-        builder.addCase(userLogin.rejected, (state, action) => {
+        })
+        .addCase(userLogin.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error.message || '';
             state.username = '';

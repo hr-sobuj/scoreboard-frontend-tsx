@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './../../assets/images/logo.png'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/reducer/authReducer';
 import { UserDataType } from '../../App';
 
@@ -13,6 +13,7 @@ const Navbar: React.FC = () => {
     dispatch(logout());
     navigate('/login');
   }
+
 
   const userDataString = localStorage.getItem('userData');
   const [userData, setUserData] = useState<UserDataType | null>(null);

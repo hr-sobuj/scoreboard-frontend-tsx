@@ -17,18 +17,19 @@ export interface UserDataType {
 }
 
 const App: FC = () => {
-  const state = useSelector((state: any) => state?.auth);
-  const [isAuth, setIsAuth] = useState(false);
+  const userDataString = localStorage.getItem('userData');
+  const [userData, setUserData] = useState<UserDataType | null>(null);
+
   useEffect(() => {
-    setIsAuth(state.username.length ? true : false);
-  }, [state]);
+    setUserData(userDataString ? JSON.parse(userDataString) : null);
+  }, [userDataString]);
   return (
     <>
       <Routes>
         <Route path='/' index element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
-        <Route path='/*' element={<ProtectedRoute auth={isAuth} />}>
+        <Route path='/*' element={<ProtectedRoute auth={userData} />}>
           <Route path="dashboard" element={<Dashboard />} />
         </Route>
         <Route path='*' element={<NotFound />} />

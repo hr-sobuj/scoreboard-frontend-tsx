@@ -8,7 +8,6 @@ interface ScoreDeleteType {
     _id:string,
 }
 
-
 interface ScorePostType {
     name: 'string',
     b4: 0,
@@ -72,8 +71,7 @@ export const postScore = createAsyncThunk('score/postScore', async (scoreObject:
             }
         );
         console.log(result);
-
-
+        
     } catch (err: any) {
         throw new Error(err.message)
     }
@@ -87,6 +85,7 @@ export const deleteScore = createAsyncThunk('score/deleteScore', async (id:Score
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
             }
         });
+        
         console.log(result);
         
     } catch (error: any) {
@@ -96,15 +95,13 @@ export const deleteScore = createAsyncThunk('score/deleteScore', async (id:Score
 
 export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject:any) => {
     try {
-        console.log(updatedObject);
-        
         const result = await axios.put(updateScoreUrl+updatedObject.id,updatedObject.data,{
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
             }
         });
-        console.log(result);
+        return result?.data?.data;
         
     } catch (error: any) {
         throw new Error(error.message)
@@ -167,7 +164,8 @@ export const scoreSlice = createSlice({
                 state.isLoading = true;
                 state.error = '';
             })
-            .addCase(updateScore.fulfilled, (state) => {
+            .addCase(updateScore.fulfilled, (state,action) => {
+                state.data.push=action.payload;
                 state.isLoading = false;
                 state.error = '';
             })

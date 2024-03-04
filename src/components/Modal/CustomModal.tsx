@@ -12,7 +12,7 @@ interface ModalProps {
 }
 
 const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
-  const [name, setName] = useState<string>('');
+  const [name, setName] = useState<string>(score?.name|| '');
   const [b4, setB4] = useState<number>(0);
   const [b6, setB6] = useState<number>(0);
   const [totalRun, setTotalRun] = useState<number>(0);
@@ -67,7 +67,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={() => false}>
+        <Dialog as="div" className="relative z-10" onClose={() => closeModal()}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

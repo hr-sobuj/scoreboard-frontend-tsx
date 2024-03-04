@@ -19,8 +19,8 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
     useEffect(() => {
         setUserData(userDataString ? JSON.parse(userDataString) : null);
     }, [userDataString]);
-
-    const batsmenScores: ScoreType[] = data.filter((val: any) => val.role === 'bat');
+    
+    const batsmenScores: ScoreType[] = data?.filter((val: any) => val.role === 'bat');
 
     const dispatch = useDispatch();
 
@@ -69,6 +69,8 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                             }}>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
+
+                                        <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
                                                 if (isDelete) {
@@ -78,7 +80,6 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />
                                             </button>
                                         </div>
-                                        <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
                                     </td>
                                 )}
                             </tr>
