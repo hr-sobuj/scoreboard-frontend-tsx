@@ -24,5 +24,6 @@ export const useAuth = () => {
     }, []);
 
     const isAuth = auth?.accessToken ? auth?.username : false;
-    return useSelector((state: any) => state?.auth) || isAuth;
+    const authState=useSelector((state: any) => state?.auth);
+    return authState || isAuth;
 }
