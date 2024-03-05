@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { authTypes } from '../../types/authTypes';
+import { AuthTypes } from '../../types/authTypes';
 import axios from "axios";
-import { LoginUrl, RegistrationUrl } from "../../constants/app.constants";
+import { loginUrl, registrationUrl } from "../../constants/app.constants";
 
 
 /*
@@ -14,7 +14,7 @@ interface UserObject {
     password: string;
 }
 
-const initialState: authTypes = {
+const initialState: AuthTypes = {
     username: '',
     accessToken: '',
     isLoading: false,
@@ -29,7 +29,7 @@ const initialState: authTypes = {
 */
 export const userRegistration = createAsyncThunk("auth/UserRegistration", async (userObject: UserObject) => {
     try {
-        const result = await axios.post(RegistrationUrl, userObject, {
+        const result = await axios.post(registrationUrl, userObject, {
             headers: {
                 'credentials': "include",
             }
@@ -52,7 +52,7 @@ export const userRegistration = createAsyncThunk("auth/UserRegistration", async 
 */
 export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: UserObject) => {
     try {
-        const result = await axios.post(LoginUrl, userObject, {
+        const result = await axios.post(loginUrl, userObject, {
             headers: {
                 'credentials': "include",
             }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { commonTypes } from "../../types/commonTypes";
+import { CommonTypes } from "../../types/commonTypes";
 import axios from "axios";
 import { deleteScoreUrl, getAllScoreUrl, postScoreUrl, updateScoreUrl } from "../../constants/app.constants";
 
@@ -16,7 +16,7 @@ interface ScorePostType {
     role: string,
 }
 
-export interface initalStateType extends commonTypes {
+export interface initalStateType extends CommonTypes {
     data:
     {
         _id?: string,

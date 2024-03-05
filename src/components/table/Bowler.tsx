@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { ScoreType } from "../../types/scoreTypes";
-import { Tableprops } from "../../types/TableProps";
+import { Tableprops } from "../../types/tableProps";
 import { UserDataType } from "../../App";
 import { useDispatch } from "react-redux";
 import { CiEdit } from "react-icons/ci";

@@ -4,6 +4,7 @@ import { postScore } from '../../store/reducer/scoreReducer';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import toast, { CheckmarkIcon } from 'react-hot-toast';
+import { customToast } from '../../utilities/customToast';
 
 interface formProps {
   pName?: string;
@@ -24,15 +25,8 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
   let [role, setRole] = useState<string>(pRole || '');
 
   const dispatch = useDispatch<AppDispatch>();
-  const notify = () => toast('New score added successfully!',{
-    position:'top-right',
-    icon:<CheckmarkIcon/>,
-    className:'bg-greem-300',
-    ariaProps: {
-      role: 'status',
-      'aria-live': 'polite',
-    },
-  });
+
+  const notify = customToast('Score updated successfully', <CheckmarkIcon />);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

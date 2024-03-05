@@ -3,27 +3,12 @@ import Navbar from "../components/nav/Navbar";
 import ScoreForm from "../components/form/ScoreForm";
 import BatsMan from "../components/table/BatsMan";
 import Bowler from "../components/table/Bowler";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchScore } from "../store/reducer/scoreReducer";
+import { useScore } from "../hooks/useScore";
 
 const Dashboard: FC = () => {
-    const [localData, setLocalData] = useState([]);
 
-    const state: any = useSelector((state: any) => state.score);
+    const { data, calculateOvers } = useScore();
 
-    const { data, isLoading, error } = state;
-
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchScore());
-    }, []);
-
-    const calculateOvers = (balls: number): string => {
-        const overs = Math.floor(balls / 6);
-        const ballsLeft = balls % 6;
-        return `${overs}.${ballsLeft}`;
-    };
     return (
         <>
             <Navbar />

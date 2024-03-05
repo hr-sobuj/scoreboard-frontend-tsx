@@ -3,7 +3,7 @@ import { ScoreType } from '../../types/scoreTypes';
 import { CiEdit } from "react-icons/ci";
 import { TiDeleteOutline } from "react-icons/ti";
 import { UserDataType } from "../../App";
-import { Tableprops } from "../../types/TableProps";
+import { Tableprops } from "../../types/tableProps";
 import { useDispatch } from "react-redux";
 import { deleteScore } from "../../store/reducer/scoreReducer";
 import CustomModal from "../Modal/CustomModal";

@@ -1,21 +1,21 @@
-export const BaseUrl='http://localhost:5000/api/v1/';
+export const baseUrl='http://localhost:5000/api/v1/';
 
 /*
 |--------------------------------------------------------------------------
 | Userlogin related endpoint
 |--------------------------------------------------------------------------
 */
-export const LoginUrl=BaseUrl+'auth/login';
-export const RegistrationUrl=BaseUrl+'auth/registration';
-export const refreshTokenUrl=BaseUrl+'auth/refresh-token';
+export const loginUrl=baseUrl+'auth/login';
+export const registrationUrl=baseUrl+'auth/registration';
+export const refreshTokenUrl=baseUrl+'auth/refresh-token';
 
 /*
 |--------------------------------------------------------------------------
 | Score related endpoint
 |--------------------------------------------------------------------------
 */
-export const postScoreUrl=BaseUrl+'score/create/';
-export const getScoreUrl=BaseUrl+'score/';
-export const getAllScoreUrl=BaseUrl+'score/get/all';
-export const updateScoreUrl=BaseUrl+'score/update/';
-export const deleteScoreUrl=BaseUrl+'score/delete/';
+export const postScoreUrl=baseUrl+'score/create/';
+export const getScoreUrl=baseUrl+'score/';
+export const getAllScoreUrl=baseUrl+'score/get/all';
+export const updateScoreUrl=baseUrl+'score/update/';
+export const deleteScoreUrl=baseUrl+'score/delete/';

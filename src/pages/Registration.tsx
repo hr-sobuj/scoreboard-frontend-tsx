@@ -1,5 +1,5 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FC, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { userRegistration } from '../store/reducer/authReducer';
 import Navbar from '../components/nav/Navbar';
 import { AppDispatch } from '../store/store';

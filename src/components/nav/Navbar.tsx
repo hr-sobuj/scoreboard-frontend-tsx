@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './../../assets/images/logo.png'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../store/reducer/authReducer';
-import { UserDataType } from '../../App';
+import { useAuth } from '../../hooks/useAuth';
 
 const Navbar: React.FC = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  
   const handleLogout: Function = () => {
     dispatch(logout());
     navigate('/login');
   }
 
-
-  const userDataString = localStorage.getItem('userData');
-  const [userData, setUserData] = useState<UserDataType | null>(null);
-
-  useEffect(() => {
-    setUserData(userDataString ? JSON.parse(userDataString) : null);
-  }, [userDataString]);
-
+  const currentUser = useAuth();
 
   return (
     <nav className="bg-gray-800 p-4">
@@ -37,7 +31,7 @@ const Navbar: React.FC = () => {
             Home
           </Link>
 
-          {userData ? (
+          {currentUser ? (
             <>
               <Link to="/dashboard" className="text-white mr-4 hover:text-gray-300">
                 Dashboard

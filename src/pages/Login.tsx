@@ -4,6 +4,7 @@ import { userLogin } from '../store/reducer/authReducer';
 import { Link, useNavigate, redirect } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
 import { AppDispatch } from '../store/store';
+import { useAuth } from '../hooks/useAuth';
 
 const Login: FC = () => {
     const [username, setUsername] = useState('');
@@ -22,14 +23,8 @@ const Login: FC = () => {
         dispatch(userLogin(userObject));
     };
 
-    const currentUser=useSelector((state:any)=>state?.auth);
-
-    useEffect(() => {
-        if (currentUser.username) {
-            navigate('/dashboard', { replace: true });
-        }
-    }, [currentUser]);
-    
+    const currentUser = useAuth();
+    currentUser.username && navigate('/dashboard', { replace: true });
 
 
     return (
