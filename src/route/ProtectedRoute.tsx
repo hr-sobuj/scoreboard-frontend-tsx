@@ -5,5 +5,5 @@ export default function ProtectedRoute({children}:any) {
     const auth=useAuth();
     console.log(auth);
     
-    return auth.username!==undefined?children:<Navigate to="/login" />
+    return auth.username!==undefined?children:<Navigate to="/login" replace={true} />
 }
