@@ -7,6 +7,9 @@ import { Tableprops } from "../../types/TableProps";
 import { useDispatch } from "react-redux";
 import { deleteScore } from "../../store/reducer/scoreReducer";
 import CustomModal from "../Modal/CustomModal";
+import { AppDispatch } from "../../store/store";
+import toast from "react-hot-toast";
+import { IoTrashOutline } from "react-icons/io5";
 
 
 const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
@@ -22,8 +25,11 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
 
     const batsmenScores: ScoreType[] = data?.filter((val: any) => val.role === 'bat');
 
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch<AppDispatch>();
+    const notify=()=>toast('Score is deleted!',{
+        icon:<IoTrashOutline/>,
+        position:'top-right',
+    })
 
     function closeModal() {
         setIsOpen(false);
@@ -77,7 +83,8 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
                                                 if (isDelete) {
-                                                    dispatch(deleteScore(score._id))
+                                                    dispatch(deleteScore(score._id));
+                                                    notify();
                                                 }
                                             }}>
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />

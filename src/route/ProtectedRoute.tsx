@@ -1,7 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useAuth } from "../hooks/useAuth";
 
 export default function ProtectedRoute({children}:any) {
-    const state=useSelector((state:any)=>state?.auth);
-    return state.username!==undefined?children:<Navigate to="/login" />
+    const auth=useAuth();
+    console.log(auth);
+    
+    return auth.username!==undefined?children:<Navigate to="/login" />
 }

@@ -5,6 +5,7 @@ import InputField from '../form/InputField';
 import { useDispatch } from 'react-redux';
 import { updateScore } from '../../store/reducer/scoreReducer';
 import { AppDispatch } from '../../store/store';
+import toast, { CheckmarkIcon } from 'react-hot-toast';
 
 interface ModalProps {
   isOpen: boolean,
@@ -13,7 +14,6 @@ interface ModalProps {
 }
 
 const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
-  // console.log(score);
   const [name, setName] = useState<string>(score?.name ?? '');
   const [b4, setB4] = useState<number>(score?.b4 ?? 0);
   const [b6, setB6] = useState<number>(score?.b6 ?? 0);
@@ -23,6 +23,15 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
 
 
   const dispatch = useDispatch<AppDispatch>();
+  const notify=()=>toast('Score updated successfully',{
+    position:'top-right',
+    icon:<CheckmarkIcon/>,
+    className:'bg-greem-300',
+    ariaProps: {
+      role: 'status',
+      'aria-live': 'polite',
+    },
+  })
 
   useEffect(() => {
     setName(score?.name || '');
@@ -65,6 +74,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
 
     dispatch(updateScore(obj));
     closeModal();
+    notify();
   };
 
   return (

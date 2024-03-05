@@ -3,31 +3,30 @@ import { commonTypes } from "../../types/commonTypes";
 import axios from "axios";
 import { deleteScoreUrl, getAllScoreUrl, postScoreUrl, updateScoreUrl } from "../../constants/app.constants";
 
-
 interface ScoreDeleteType {
-    _id:string,
+    _id: string,
 }
 
 interface ScorePostType {
-    name: 'string',
-    b4: 0,
-    b6: 0,
-    totalRun: 0,
-    totalBall: 0,
-    role: '',
+    name: string,
+    b4: number,
+    b6: number,
+    totalRun: number,
+    totalBall: number,
+    role: string,
 }
 
 export interface initalStateType extends commonTypes {
-    data: 
-        {
-            _id?: string,
-            name: string,
-            b4: number,
-            b6: number,
-            totalRun: number,
-            totalBall: number,
-            role: string,
-        }[];
+    data:
+    {
+        _id?: string,
+        name: string,
+        b4: number,
+        b6: number,
+        totalRun: number,
+        totalBall: number,
+        role: string,
+    }[];
 }
 
 const initialState: initalStateType = {
@@ -60,54 +59,54 @@ export const postScore = createAsyncThunk('score/postScore', async (scoreObject:
                 headers: {
                     'Content-Type': 'application/json',
                     'credentials': "include",
-                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken') || '')}`,
                 }
             }
         );
         // console.log(result);
-        if(result.status===200){
+        if (result.status === 200) {
             return result?.data?.data;
         }
-        
+
     } catch (err: any) {
         throw new Error(err.message)
     }
 });
 
-export const deleteScore = createAsyncThunk('score/deleteScore', async (id:ScoreDeleteType) => {
+export const deleteScore = createAsyncThunk('score/deleteScore', async (id: ScoreDeleteType) => {
     try {
-        const result = await axios.delete(deleteScoreUrl+id,{
+        const result = await axios.delete(deleteScoreUrl + id, {
             headers: {
                 'Content-Type': 'application/json',
                 'credentials': "include",
-                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken') || '')}`,
             }
         });
-        
-        if(result.status===201){
+
+        if (result.status === 201) {
             return id;
         }
-        
+
     } catch (error: any) {
         throw new Error(error.message)
     }
 });
 
-export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject:any) => {
+export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject: any) => {
     try {
-        const result = await axios.put(updateScoreUrl+updatedObject.id,updatedObject.data,{
+        const result = await axios.put(updateScoreUrl + updatedObject.id, updatedObject.data, {
             headers: {
                 'Content-Type': 'application/json',
                 'credentials': "include",
-                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken')||'')}`,
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken') || '')}`,
             }
         });
-        const obj={
-            id:updatedObject.id,
-            data:result?.data?.data
+        const obj = {
+            id: updatedObject.id,
+            data: result?.data?.data
         }
         return obj;
-        
+
     } catch (error: any) {
         throw new Error(error.message)
     }
@@ -140,12 +139,12 @@ export const scoreSlice = createSlice({
                 }];
                 state.isLoading = false;
                 state.error = action.error.message || '';
-            })            
+            })
             .addCase(postScore.pending, (state) => {
                 state.isLoading = true;
                 state.error = '';
             })
-            .addCase(postScore.fulfilled, (state,action) => {
+            .addCase(postScore.fulfilled, (state, action) => {
                 console.log(action.payload);
                 state.data.push(action.payload);
                 state.isLoading = false;
@@ -159,8 +158,8 @@ export const scoreSlice = createSlice({
                 state.isLoading = true;
                 state.error = '';
             })
-            .addCase(deleteScore.fulfilled, (state,action) => {
-                state.data=state.data.filter((val)=>val._id!==action.payload);
+            .addCase(deleteScore.fulfilled, (state, action) => {
+                state.data = state.data.filter((val) => val._id !== action.payload);
                 state.isLoading = false;
                 state.error = '';
             })
@@ -172,9 +171,9 @@ export const scoreSlice = createSlice({
                 state.isLoading = true;
                 state.error = '';
             })
-            .addCase(updateScore.fulfilled, (state,action) => {
-                const updateIndex=state.data.findIndex((val)=>val._id===action.payload.id);
-                state.data.splice(updateIndex,1,action.payload.data);
+            .addCase(updateScore.fulfilled, (state, action) => {
+                const updateIndex = state.data.findIndex((val) => val._id === action.payload.id);
+                state.data.splice(updateIndex, 1, action.payload.data);
                 state.isLoading = false;
                 state.error = '';
             })

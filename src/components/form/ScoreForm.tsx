@@ -2,6 +2,8 @@ import { FC, FormEvent, useState } from 'react';
 import InputField from './InputField';
 import { postScore } from '../../store/reducer/scoreReducer';
 import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import toast, { CheckmarkIcon } from 'react-hot-toast';
 
 interface formProps {
   pName?: string;
@@ -14,14 +16,23 @@ interface formProps {
 
 const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRole }) => {
   
-  let [name, setName] = useState(pName || '');
-  let [b4, setB4] = useState(pB4 || 0);
-  let [b6, setB6] = useState(pB6 || 0);
-  let [totalRun, setTotalRun] = useState(pTotalRun || 0);
-  let [totalBall, setTotalBall] = useState(pTotalBall || 0);
-  let [role, setRole] = useState(pRole || '');
+  let [name, setName] = useState<string>(pName || '');
+  let [b4, setB4] = useState<number>(pB4 || 0);
+  let [b6, setB6] = useState<number>(pB6 || 0);
+  let [totalRun, setTotalRun] = useState<number>(pTotalRun || 0);
+  let [totalBall, setTotalBall] = useState<number>(pTotalBall || 0);
+  let [role, setRole] = useState<string>(pRole || '');
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const notify = () => toast('New score added successfully!',{
+    position:'top-right',
+    icon:<CheckmarkIcon/>,
+    className:'bg-greem-300',
+    ariaProps: {
+      role: 'status',
+      'aria-live': 'polite',
+    },
+  });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -49,8 +60,8 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
       totalBall,
       role
     };
-
     dispatch(postScore(obj));
+    notify();
   };
 
 

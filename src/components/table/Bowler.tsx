@@ -7,6 +7,9 @@ import { CiEdit } from "react-icons/ci";
 import CustomModal from "../Modal/CustomModal";
 import { deleteScore } from "../../store/reducer/scoreReducer";
 import { TiDeleteOutline } from "react-icons/ti";
+import { AppDispatch } from "../../store/store";
+import toast from "react-hot-toast";
+import { IoTrashOutline } from "react-icons/io5";
 
 const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
     let [isOpen, setIsOpen] = useState(false);
@@ -21,8 +24,11 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
 
     const bowlersScores:ScoreType[]=data.filter((val:any)=>val.role==='ball');
 
-    const dispatch = useDispatch();
-
+    const dispatch = useDispatch<AppDispatch>();
+    const notify=()=>toast('Score is deleted!',{
+        icon:<IoTrashOutline/>,
+        position:'top-right',
+    })
 
     function closeModal() {
         setIsOpen(false)
@@ -74,7 +80,8 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
                                                 if (isDelete) {
-                                                    dispatch(deleteScore(score._id))
+                                                    dispatch(deleteScore(score._id));
+                                                    notify();
                                                 }
                                             }}>
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />
