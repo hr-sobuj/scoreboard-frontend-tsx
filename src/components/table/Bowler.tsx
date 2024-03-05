@@ -10,25 +10,19 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { AppDispatch } from "../../store/store";
 import toast from "react-hot-toast";
 import { IoTrashOutline } from "react-icons/io5";
+import { useAuth } from "../../hooks/useAuth";
+import { customToast } from "../../utilities/customToast";
 
 const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
     let [isOpen, setIsOpen] = useState(false);
     const [currentScore, setCurrentScore] = useState({})
 
-    const userDataString = localStorage.getItem('userData');
-    const [userData, setUserData] = useState<UserDataType | null>(null);
+    const currentUser = useAuth();
 
-    useEffect(() => {
-        setUserData(userDataString ? JSON.parse(userDataString) : null);
-    }, [userDataString]);
-
-    const bowlersScores:ScoreType[]=data.filter((val:any)=>val.role==='ball');
+    const bowlersScores: ScoreType[] = data.filter((val: any) => val.role === 'ball');
 
     const dispatch = useDispatch<AppDispatch>();
-    const notify=()=>toast('Score is deleted!',{
-        icon:<IoTrashOutline/>,
-        position:'top-right',
-    })
+    const notify = () => customToast('Score is deleted!', <IoTrashOutline />)
 
     function closeModal() {
         setIsOpen(false)
@@ -52,8 +46,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                             <th className="border border-gray-300 px-4 py-2">Total Runs</th>
                             <th className="border border-gray-300 px-4 py-2">Total Balls</th>
                             <th className="border border-gray-300 px-4 py-2">Overs</th>
-                            {/* <th className="border border-gray-300 px-4 py-2">Role</th> */}
-                            {userData && (<th className="border border-gray-300 px-4 py-2">Actions</th>)}
+                            {currentUser && (<th className="border border-gray-300 px-4 py-2">Actions</th>)}
                         </tr>
                     </thead>
                     <tbody>
@@ -65,8 +58,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                                 <td className="border border-gray-300 px-4 py-2">{score.totalRun}</td>
                                 <td className="border border-gray-300 px-4 py-2">{score.totalBall}</td>
                                 <td className="border border-gray-300 px-4 py-2">{calculateOvers(score.totalBall)}</td>
-                                {/* <td className="border border-gray-300 px-4 py-2">{score.role}</td> */}
-                                {userData && (
+                                {currentUser && (
                                     <td className="border border-gray-300 px-4 py-2">
                                         <div className="flex space-x-3 justify-center items-center">
                                             <button onClick={() => {
@@ -75,7 +67,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
 
-                                           
+
                                             {/* <UpdateModal isOpen={isOpen} closeModal={closeModal} score={currentScore} /> */}
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');

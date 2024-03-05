@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import Navbar from "../components/nav/Navbar";
 import ScoreForm from "../components/form/ScoreForm";
-import BatsMan from "../components/table/BatsMan";
-import Bowler from "../components/table/Bowler";
 import { useScore } from "../hooks/useScore";
+import ShowScore from "../components/table/ShowScore";
 
 const Dashboard: FC = () => {
 
@@ -18,10 +17,10 @@ const Dashboard: FC = () => {
             </div>
             <div className="container mx-auto p-4 my-10 flex flex-col space-y-6">
                 <div>
-                    <BatsMan data={data} calculateOvers={calculateOvers} />
+                    <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
                 </div>
                 <div>
-                    <Bowler data={data} calculateOvers={calculateOvers} />
+                    <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
                 </div>
             </div>
         </>

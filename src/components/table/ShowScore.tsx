@@ -1,43 +1,42 @@
 import { FC, useState } from "react";
-import { ScoreType } from '../../types/scoreTypes';
-import { CiEdit } from "react-icons/ci";
-import { TiDeleteOutline } from "react-icons/ti";
+import { ScoreType } from "../../types/scoreTypes";
 import { Tableprops } from "../../types/tableProps";
 import { useDispatch } from "react-redux";
-import { deleteScore } from "../../store/reducer/scoreReducer";
+import { CiEdit } from "react-icons/ci";
 import CustomModal from "../Modal/CustomModal";
+import { deleteScore } from "../../store/reducer/scoreReducer";
+import { TiDeleteOutline } from "react-icons/ti";
 import { AppDispatch } from "../../store/store";
 import { IoTrashOutline } from "react-icons/io5";
 import { useAuth } from "../../hooks/useAuth";
 import { customToast } from "../../utilities/customToast";
 
-
-const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
+const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
     let [isOpen, setIsOpen] = useState(false);
-    const [currentScore, setCurrentScore] = useState({});
+    const [currentScore, setCurrentScore] = useState({})
 
     const currentUser = useAuth();
 
+    const bowlersScores: ScoreType[] = data.filter((val: any) => val.role === 'ball');
     const batsmenScores: ScoreType[] = data?.filter((val: any) => val.role === 'bat');
+
+    const currentStatus = flag === 'bat' ? batsmenScores : bowlersScores;
 
     const dispatch = useDispatch<AppDispatch>();
     const notify = () => customToast('Score is deleted!', <IoTrashOutline />)
 
     function closeModal() {
-        setIsOpen(false);
+        setIsOpen(false)
     }
 
     function openModal(score: any) {
         setCurrentScore(score);
-        setTimeout(() => {
-            setIsOpen(true);
-        }, 100);
+        setIsOpen(true)
     }
-
 
     return (
         <div>
-            <h2 className="text-3xl font-bold text-center mb-4">Batsmen Scoreboard</h2>
+            <h2 className="text-3xl font-bold text-center mb-4">Bowlers Scoreboard</h2>
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse border border-gray-300">
                     <thead>
@@ -52,7 +51,7 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {batsmenScores?.map((score: any) => (
+                        {currentStatus?.map((score: any) => (
                             <tr key={score._id} className="hover:bg-gray-50">
                                 <td className="border border-gray-300 px-4 py-2">{score.name}</td>
                                 <td className="border border-gray-300 px-4 py-2">{score.b4}</td>
@@ -68,6 +67,7 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                                             }}>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
+
 
                                             {/* <UpdateModal isOpen={isOpen} closeModal={closeModal} score={currentScore} /> */}
                                             <button onClick={() => {
@@ -87,10 +87,9 @@ const BatsMan: FC<Tableprops> = ({ data, calculateOvers }) => {
                     </tbody>
                 </table>
                 <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
-
             </div>
         </div>
     )
 }
 
-export default BatsMan;
+export default ShowScore;
