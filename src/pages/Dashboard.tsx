@@ -1,13 +1,9 @@
 import { FC } from "react";
 import Navbar from "../components/nav/Navbar";
 import ScoreForm from "../components/form/ScoreForm";
-import { useScore } from "../hooks/useScore";
-import ShowScore from "../components/table/ShowScore";
+import { CommonData } from "../components/common/CommonData";
 
 const Dashboard: FC = () => {
-
-    const { data, isLoading, calculateOvers } = useScore();
-
     return (
         <>
             <Navbar />
@@ -16,17 +12,7 @@ const Dashboard: FC = () => {
                 <ScoreForm />
             </div>
             <div className="container mx-auto p-4 my-10 flex flex-col space-y-6">
-                {isLoading && <p>Loading...</p>}
-                {data?.length && (
-                    <>
-                        <div className="mb-8">
-                            <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
-                        </div>
-                        <div>
-                            <ShowScore data={data} calculateOvers={calculateOvers} flag='ball' />
-                        </div>
-                    </>
-                )}
+                <CommonData />
             </div>
         </>
     )

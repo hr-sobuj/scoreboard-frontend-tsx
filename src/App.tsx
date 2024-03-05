@@ -14,7 +14,6 @@ const App: FC = () => {
 
   return (
     <div>
-      <>
         <RouterProvider router={router} future={{ v7_startTransition: true }} />
         <Toaster
           position="top-center"
@@ -34,7 +33,6 @@ const App: FC = () => {
               duration: 1000,
             },
           }} />
-      </>
     </div>
   )
 }

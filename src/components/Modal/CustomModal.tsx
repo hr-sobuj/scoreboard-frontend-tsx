@@ -72,7 +72,6 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   };
 
   return (
-    <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={() => false}>
           <Transition.Child
@@ -169,7 +168,6 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
           </div>
         </Dialog>
       </Transition>
-    </>
   )
 }
 
