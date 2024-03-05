@@ -69,7 +69,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
 
-                                            <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
+                                           
                                             {/* <UpdateModal isOpen={isOpen} closeModal={closeModal} score={currentScore} /> */}
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
@@ -86,6 +86,7 @@ const Bowler: FC<Tableprops> = ({ data, calculateOvers }: any) => {
                         ))}
                     </tbody>
                 </table>
+                <CustomModal isOpen={isOpen} closeModal={closeModal} score={currentScore} />
             </div>
         </div>
     )

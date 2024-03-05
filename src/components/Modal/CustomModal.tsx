@@ -13,7 +13,7 @@ interface ModalProps {
 }
 
 const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
-  console.log(score);
+  // console.log(score);
   const [name, setName] = useState<string>(score?.name ?? '');
   const [b4, setB4] = useState<number>(score?.b4 ?? 0);
   const [b6, setB6] = useState<number>(score?.b6 ?? 0);
