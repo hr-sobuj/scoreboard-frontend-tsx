@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../store/reducer/authReducer';
 import { Link, useNavigate, redirect } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
+import { AppDispatch } from '../store/store';
 
 const Login: FC = () => {
     const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ const Login: FC = () => {
 
     const navigate = useNavigate();
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

@@ -1,13 +1,21 @@
-import React, { ChangeEvent, FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { userRegistration } from '../store/reducer/authReducer';
 import Navbar from '../components/nav/Navbar';
+import { AppDispatch } from '../store/store';
+import toast, { CheckmarkIcon } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Registration: FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
+    const notify = () => toast('Registration successfull!', {
+        position: 'top-right',
+        icon: <CheckmarkIcon />
+    })
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -17,6 +25,8 @@ const Registration: FC = () => {
             role: 'admin'
         }
         dispatch(userRegistration(userObject));
+        notify();
+        navigate('/login');
     };
 
     return (
