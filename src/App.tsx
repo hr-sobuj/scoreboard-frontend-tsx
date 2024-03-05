@@ -1,6 +1,5 @@
 import {
   RouterProvider,
-  Routes
 } from "react-router-dom";
 import { FC } from "react";
 import { router } from "./route/router";
@@ -32,11 +31,7 @@ const App: FC = () => {
             },
 
             success: {
-              duration: 3000,
-              theme: {
-                primary: 'green',
-                secondary: 'black',
-              },
+              duration: 1000,
             },
           }} />
       </>
