@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CommonTypes } from "../../types/commonTypes";
 import axios from "axios";
 import { deleteScoreUrl, getAllScoreUrl, postScoreUrl, updateScoreUrl } from "../../constants/app.constants";
+import { useSelector } from "react-redux";
+import { RootState } from "@reduxjs/toolkit/query";
 
 interface ScoreDeleteType {
     _id: string,
@@ -52,18 +54,18 @@ export const fetchScore = createAsyncThunk('score/getScore', async () => {
 });
 
 
-export const postScore = createAsyncThunk('score/postScore', async (scoreObject: ScorePostType) => {
+export const postScore = createAsyncThunk('score/postScore', async (scoreObject: ScorePostType, { getState }) => {
     try {
+        const state: any = getState();
         const result = await axios.post(postScoreUrl, scoreObject,
             {
                 headers: {
                     'Content-Type': 'application/json',
                     'credentials': "include",
-                    Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken') || '')}`,
+                    Authorization: `Bearer ${state.auth.accessToken}`,
                 }
             }
         );
-        // console.log(result);
         if (result.status === 200) {
             return result?.data?.data;
         }
@@ -73,13 +75,14 @@ export const postScore = createAsyncThunk('score/postScore', async (scoreObject:
     }
 });
 
-export const deleteScore = createAsyncThunk('score/deleteScore', async (id: ScoreDeleteType) => {
+export const deleteScore = createAsyncThunk('score/deleteScore', async (id: ScoreDeleteType, { getState }) => {
     try {
+        const state: any = getState();
         const result = await axios.delete(deleteScoreUrl + id, {
             headers: {
                 'Content-Type': 'application/json',
                 'credentials': "include",
-                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken') || '')}`,
+                Authorization: `Bearer ${state.auth.accessToken}`,
             }
         });
 
@@ -92,15 +95,17 @@ export const deleteScore = createAsyncThunk('score/deleteScore', async (id: Scor
     }
 });
 
-export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject: any) => {
+export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject: any, { getState }) => {
     try {
+        const state: any = getState();
         const result = await axios.put(updateScoreUrl + updatedObject.id, updatedObject.data, {
             headers: {
                 'Content-Type': 'application/json',
                 'credentials': "include",
-                Authorization: `Bearer ${JSON.parse(localStorage.getItem('accessToken') || '')}`,
+                Authorization: `Bearer ${state.auth.accessToken}`,
             }
         });
+        console.log('cl', result);
         const obj = {
             id: updatedObject.id,
             data: result?.data?.data

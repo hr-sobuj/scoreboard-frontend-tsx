@@ -6,7 +6,7 @@ import ShowScore from "../components/table/ShowScore";
 
 const Dashboard: FC = () => {
 
-    const { data, calculateOvers } = useScore();
+    const { data, isLoading, calculateOvers } = useScore();
 
     return (
         <>
@@ -16,12 +16,17 @@ const Dashboard: FC = () => {
                 <ScoreForm />
             </div>
             <div className="container mx-auto p-4 my-10 flex flex-col space-y-6">
-                <div>
-                    <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
-                </div>
-                <div>
-                    <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
-                </div>
+                {isLoading && <p>Loading...</p>}
+                {data?.length && (
+                    <>
+                        <div className="mb-8">
+                            <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
+                        </div>
+                        <div>
+                            <ShowScore data={data} calculateOvers={calculateOvers} flag='ball' />
+                        </div>
+                    </>
+                )}
             </div>
         </>
     )
