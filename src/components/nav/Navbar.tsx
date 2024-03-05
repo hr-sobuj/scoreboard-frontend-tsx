@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
             Home
           </Link>
 
-          {currentUser ? (
+          {currentUser.username ? (
             <>
               <Link to="/dashboard" className="text-white mr-4 hover:text-gray-300">
                 Dashboard

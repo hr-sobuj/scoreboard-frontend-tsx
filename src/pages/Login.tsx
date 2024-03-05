@@ -9,10 +9,14 @@ import { useAuth } from '../hooks/useAuth';
 const Login: FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const currentUser = useAuth();
     const navigate = useNavigate();
 
-    const dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+        currentUser.username && navigate('/dashboard', { replace: true });
+    }, [currentUser.username, navigate]);
+
+    const dispatch:any = useDispatch<AppDispatch>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,10 +26,6 @@ const Login: FC = () => {
 
         dispatch(userLogin(userObject));
     };
-
-    const currentUser = useAuth();
-    currentUser.username && navigate('/dashboard', { replace: true });
-
 
     return (
         <>

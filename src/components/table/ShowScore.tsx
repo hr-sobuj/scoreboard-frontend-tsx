@@ -20,7 +20,7 @@ const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
     const bowlersScores: ScoreType[] = data.filter((val: any) => val.role === 'ball');
     const batsmenScores: ScoreType[] = data?.filter((val: any) => val.role === 'bat');
 
-    const currentStatus = flag === 'bat' ? batsmenScores : bowlersScores;
+    const currentScoreShow = flag === 'bat' ? batsmenScores : bowlersScores;
 
     const dispatch = useDispatch<AppDispatch>();
     const notify = () => customToast('Score is deleted!', <IoTrashOutline />)
@@ -47,11 +47,11 @@ const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
                             <th className="border border-gray-300 px-4 py-2">Total Runs</th>
                             <th className="border border-gray-300 px-4 py-2">Total Balls</th>
                             <th className="border border-gray-300 px-4 py-2">Overs</th>
-                            {currentUser && (<th className="border border-gray-300 px-4 py-2">Actions</th>)}
+                            {currentUser.username && (<th className="border border-gray-300 px-4 py-2">Actions</th>)}
                         </tr>
                     </thead>
                     <tbody>
-                        {currentStatus?.map((score: any) => (
+                        {currentScoreShow?.map((score: any) => (
                             <tr key={score._id} className="hover:bg-gray-50">
                                 <td className="border border-gray-300 px-4 py-2">{score.name}</td>
                                 <td className="border border-gray-300 px-4 py-2">{score.b4}</td>
@@ -59,7 +59,7 @@ const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
                                 <td className="border border-gray-300 px-4 py-2">{score.totalRun}</td>
                                 <td className="border border-gray-300 px-4 py-2">{score.totalBall}</td>
                                 <td className="border border-gray-300 px-4 py-2">{calculateOvers(score.totalBall)}</td>
-                                {currentUser && (
+                                {currentUser.username && (
                                     <td className="border border-gray-300 px-4 py-2">
                                         <div className="flex space-x-3 justify-center items-center">
                                             <button onClick={() => {
@@ -67,9 +67,6 @@ const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
                                             }}>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
-
-
-                                            {/* <UpdateModal isOpen={isOpen} closeModal={closeModal} score={currentScore} /> */}
                                             <button onClick={() => {
                                                 const isDelete = confirm('Are you sure to delete?');
                                                 if (isDelete) {

@@ -21,7 +21,6 @@ const initialState: AuthTypes = {
     error: '',
 }
 
-
 /*
 |--------------------------------------------------------------------------
 | User Registration method
@@ -63,8 +62,6 @@ export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: U
                 username: userObject.username,
                 token: result?.data?.token,
             }
-            localStorage.setItem('userData', JSON.stringify(userData));
-            localStorage.setItem('accessToken', JSON.stringify(result?.data?.token));
             return userData;
         }
     } catch (error: any) {
