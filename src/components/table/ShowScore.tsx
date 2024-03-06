@@ -18,8 +18,8 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
 
     const currentUser = useAuth();
 
-    const bowlersScores: ScoreType[] = data.filter((val: any) => val.role === 'ball');
-    const batsmenScores: ScoreType[] = data?.filter((val: any) => val.role === 'bat');
+    const bowlersScores: ScoreType[] = data.filter((val: any) => val?.role === 'ball');
+    const batsmenScores: ScoreType[] = data?.filter((val: any) => val?.role === 'bat');
 
     const currentScoreShow = flag === 'bat' ? batsmenScores : bowlersScores;
 

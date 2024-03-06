@@ -8,7 +8,7 @@ export const CommonData = () => {
     return (
         <>
             {isLoading && <p>Loading...</p>}
-            {data?.length && (
+            {data?.length? (
                 <>
                     <div className="mb-8">
                         <ShowScore name="Batsman" data={data} calculateOvers={calculateOvers} flag='bat' />
@@ -16,6 +16,10 @@ export const CommonData = () => {
                     <div>
                         <ShowScore name="Bowler" data={data} calculateOvers={calculateOvers} flag='ball' />
                     </div>
+                </>
+            ):(
+                <>
+                    <h3 className="text-center text-4xl text-red-600">Data not found!</h3>
                 </>
             )}
         </>

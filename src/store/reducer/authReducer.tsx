@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthTypes } from '../../types/authTypes';
-import { loginUrl, registrationUrl } from "../../constants/app.constants";
+import { loginUrl, refreshTokenUrl, registrationUrl } from "../../constants/app.constants";
 import axiosHttp from "../../utilities/axiosInterceptors";
 
 
@@ -55,6 +55,21 @@ export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: U
             }
             return userData;
         }
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Refressh token
+|--------------------------------------------------------------------------
+*/
+export const refressToken = createAsyncThunk("auth/refressToken", async () => {
+    try {
+        const result = await axiosHttp.post(refreshTokenUrl);
+        console.log(result);
     } catch (error: any) {
         throw new Error(error.message)
     }
