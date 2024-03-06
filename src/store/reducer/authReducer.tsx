@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthTypes } from '../../types/authTypes';
 import axios from "axios";
 import { loginUrl, registrationUrl } from "../../constants/app.constants";
+import axiosHttp from "../../utilities/axiosInterceptors";
 
 
 /*
@@ -28,11 +29,7 @@ const initialState: AuthTypes = {
 */
 export const userRegistration = createAsyncThunk("auth/UserRegistration", async (userObject: UserObject) => {
     try {
-        const result = await axios.post(registrationUrl, userObject, {
-            headers: {
-                'credentials': "include",
-            }
-        });
+        const result = await axiosHttp.post(registrationUrl, userObject);
         if (result.status === 200) {
             return result?.data;
         } else {
@@ -51,13 +48,8 @@ export const userRegistration = createAsyncThunk("auth/UserRegistration", async 
 */
 export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: UserObject) => {
     try {
-        const result = await axios.post(loginUrl, userObject, {
-            headers: {
-                'credentials': "include",
-            }
-        });
+        const result = await axiosHttp.post(loginUrl, userObject);
         if (result.status === 200) {
-
             const userData = {
                 username: userObject.username,
                 token: result?.data?.token,

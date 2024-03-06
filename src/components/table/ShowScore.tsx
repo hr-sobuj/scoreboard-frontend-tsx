@@ -11,7 +11,8 @@ import { IoTrashOutline } from "react-icons/io5";
 import { useAuth } from "../../hooks/useAuth";
 import { customToast } from "../../utilities/customToast";
 
-const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
+
+const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) => {
     let [isOpen, setIsOpen] = useState(false);
     const [currentScore, setCurrentScore] = useState({})
 
@@ -36,7 +37,7 @@ const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
 
     return (
         <div>
-            <h2 className="text-3xl font-bold text-center mb-4">Bowlers Scoreboard</h2>
+            <h2 className="text-3xl font-bold text-center mb-4">{name} Scoreboard</h2>
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse border border-gray-300">
                     <thead>
@@ -68,7 +69,8 @@ const ShowScore: FC<Tableprops> = ({ data, calculateOvers, flag }: any) => {
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
                                             <button onClick={() => {
-                                                const isDelete = confirm('Are you sure to delete?');
+                                                // const isDelete = confirm('Are you sure to delete?');
+                                                const isDelete = true;
                                                 if (isDelete) {
                                                     dispatch(deleteScore(score._id));
                                                     notify();

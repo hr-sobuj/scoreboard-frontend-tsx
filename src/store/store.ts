@@ -4,16 +4,16 @@ import scoreReducer from "./reducer/scoreReducer";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-
-const rootReducer = combineReducers({
-    auth: authReducer,
-    score: scoreReducer
-});
-
 const persistConfig = {
     key: 'root',
     storage,
+    version:1,
 }
+
+const rootReducer = combineReducers({
+    auth: authReducer,
+    score: scoreReducer,
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

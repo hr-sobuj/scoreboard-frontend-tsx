@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CommonTypes } from "../../types/commonTypes";
 import axios from "axios";
 import { deleteScoreUrl, getAllScoreUrl, postScoreUrl, updateScoreUrl } from "../../constants/app.constants";
-import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+import axiosHttp from "../../utilities/axiosInterceptors";
 
 interface ScoreDeleteType {
     _id: string,
@@ -40,11 +39,7 @@ const initialState: initalStateType = {
 
 export const fetchScore = createAsyncThunk('score/getScore', async () => {
     try {
-        const result = await axios.get(getAllScoreUrl, {
-            headers: {
-                'credentials': "include",
-            }
-        });
+        const result = await axiosHttp.get(getAllScoreUrl);
         if (result.status === 201) {
             return result?.data;
         }
@@ -54,18 +49,9 @@ export const fetchScore = createAsyncThunk('score/getScore', async () => {
 });
 
 
-export const postScore = createAsyncThunk('score/postScore', async (scoreObject: ScorePostType, { getState }) => {
+export const postScore = createAsyncThunk('score/postScore', async (scoreObject: ScorePostType) => {
     try {
-        const state: any = getState();
-        const result = await axios.post(postScoreUrl, scoreObject,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'credentials': "include",
-                    Authorization: `Bearer ${state.auth.accessToken}`,
-                }
-            }
-        );
+        const result = await axiosHttp.post(postScoreUrl, scoreObject);
         if (result.status === 200) {
             return result?.data?.data;
         }
@@ -75,47 +61,30 @@ export const postScore = createAsyncThunk('score/postScore', async (scoreObject:
     }
 });
 
-export const deleteScore = createAsyncThunk('score/deleteScore', async (id: ScoreDeleteType, { getState }) => {
+export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject: any) => {
     try {
-        const state: any = getState();
-        const result = await axios.delete(deleteScoreUrl + id, {
-            headers: {
-                'Content-Type': 'application/json',
-                'credentials': "include",
-                Authorization: `Bearer ${state.auth.accessToken}`,
-            }
-        });
-
-        if (result.status === 201) {
-            return id;
-        }
-
-    } catch (error: any) {
-        throw new Error(error.message)
-    }
-});
-
-export const updateScore = createAsyncThunk('score/updateScore', async (updatedObject: any, { getState }) => {
-    try {
-        const state: any = getState();
-        const result = await axios.put(updateScoreUrl + updatedObject.id, updatedObject.data, {
-            headers: {
-                'Content-Type': 'application/json',
-                'credentials': "include",
-                Authorization: `Bearer ${state.auth.accessToken}`,
-            }
-        });
-        console.log('cl', result);
+        const result = await axiosHttp.put(updateScoreUrl + updatedObject.id, updatedObject.data);
         const obj = {
             id: updatedObject.id,
             data: result?.data?.data
         }
         return obj;
-
     } catch (error: any) {
         throw new Error(error.message)
     }
 });
+
+export const deleteScore = createAsyncThunk('score/deleteScore', async (id: ScoreDeleteType) => {
+    try {
+        const result = await axiosHttp.delete(deleteScoreUrl + id);
+        if (result.status === 201) {
+            return id;
+        }
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+});
+
 
 export const scoreSlice = createSlice({
     name: "score",
@@ -150,7 +119,6 @@ export const scoreSlice = createSlice({
                 state.error = '';
             })
             .addCase(postScore.fulfilled, (state, action) => {
-                console.log(action.payload);
                 state.data.push(action.payload);
                 state.isLoading = false;
                 state.error = '';

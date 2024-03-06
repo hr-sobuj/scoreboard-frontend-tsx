@@ -11,10 +11,10 @@ export const CommonData = () => {
             {data?.length && (
                 <>
                     <div className="mb-8">
-                        <ShowScore data={data} calculateOvers={calculateOvers} flag='bat' />
+                        <ShowScore name="Batsman" data={data} calculateOvers={calculateOvers} flag='bat' />
                     </div>
                     <div>
-                        <ShowScore data={data} calculateOvers={calculateOvers} flag='ball' />
+                        <ShowScore name="Bowler" data={data} calculateOvers={calculateOvers} flag='ball' />
                     </div>
                 </>
             )}
