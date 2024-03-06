@@ -1,9 +1,8 @@
-import {
-  RouterProvider,
-} from "react-router-dom";
 import { FC } from "react";
 import { router } from "./route/router";
 import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 
 export interface UserDataType {
   username: string,
@@ -11,29 +10,27 @@ export interface UserDataType {
 }
 
 const App: FC = () => {
-
   return (
-    <div>
+    <>
+      <CookiesProvider defaultSetOptions={{ path: '/' }}>
         <RouterProvider router={router} future={{ v7_startTransition: true }} />
         <Toaster
           position="top-center"
           reverseOrder={false}
           gutter={8}
-          containerClassName=""
-          containerStyle={{}}
           toastOptions={{
-            className: '',
-            duration: 5000,
+            duration: 1000,
             style: {
               background: '#363636',
               color: '#fff',
             },
-
             success: {
               duration: 1000,
             },
           }} />
-    </div>
+
+      </CookiesProvider >
+    </>
   )
 }
 

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CommonTypes } from "../../types/commonTypes";
-import axios from "axios";
 import { deleteScoreUrl, getAllScoreUrl, postScoreUrl, updateScoreUrl } from "../../constants/app.constants";
 import axiosHttp from "../../utilities/axiosInterceptors";
 
