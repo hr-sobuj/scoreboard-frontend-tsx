@@ -75,8 +75,7 @@ export const updateScore = createAsyncThunk('score/updateScore', async (updatedO
 
 export const deleteScore = createAsyncThunk('score/deleteScore', async (id: ScoreDeleteType) => {
     try {
-        const result = await axiosHttp.delete(deleteScoreUrl + id);
-        console.log(result);
+        const result = await axiosHttp.delete(deleteScoreUrl + id);;
         if (result.status === 204) {
             return id;
         }
