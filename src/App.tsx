@@ -2,7 +2,6 @@ import { FC } from "react";
 import { router } from "./route/router";
 import { Toaster } from "react-hot-toast";
 import { RouterProvider } from "react-router-dom";
-import { CookiesProvider } from "react-cookie";
 
 export interface UserDataType {
   username: string,
@@ -12,7 +11,6 @@ export interface UserDataType {
 const App: FC = () => {
   return (
     <>
-      <CookiesProvider defaultSetOptions={{ path: '/' }}>
         <RouterProvider router={router} future={{ v7_startTransition: true }} />
         <Toaster
           position="top-center"
@@ -28,8 +26,6 @@ const App: FC = () => {
               duration: 1000,
             },
           }} />
-
-      </CookiesProvider >
     </>
   )
 }

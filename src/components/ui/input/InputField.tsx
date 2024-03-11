@@ -1,4 +1,5 @@
 import { ChangeEventHandler, FC } from "react";
+import { cn } from "../../../utilities/cssMerge";
 
 interface InputFieldProps {
     label: string,
@@ -6,10 +7,12 @@ interface InputFieldProps {
     name: string,
     value: any,
     placeholder: string,
-    handleChange: Function
+    handleChange: Function,
+    className?: string,
+    rest?: any,
 }
 
-const InputField: FC<InputFieldProps> = ({ label, type, name, value, placeholder, handleChange }) => {
+const InputField: FC<InputFieldProps> = ({ label, type, name, value, placeholder, handleChange, className, ...rest }) => {
     const inputHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
         handleChange(e.target.value);
     }
@@ -19,7 +22,7 @@ const InputField: FC<InputFieldProps> = ({ label, type, name, value, placeholder
                 {label}
             </label>
             <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className={cn("shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", className, rest)}
                 id={name}
                 type={type}
                 placeholder={placeholder}

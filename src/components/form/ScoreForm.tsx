@@ -1,9 +1,9 @@
 import { FC, FormEvent, useState } from 'react';
-import InputField from './InputField';
+import InputField from '../ui/input/InputField';
 import { postScore } from '../../store/reducer/scoreReducer';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
-import toast, { CheckmarkIcon } from 'react-hot-toast';
+import { CheckmarkIcon } from 'react-hot-toast';
 import { customToast } from '../../utilities/customToast';
 
 interface formProps {

@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { FC, FormEvent, Fragment, forwardRef, useEffect, useState } from 'react'
 import { TiTimes } from 'react-icons/ti';
-import InputField from '../form/InputField';
+import InputField from '../ui/input/InputField';
 import { useDispatch } from 'react-redux';
 import { updateScore } from '../../store/reducer/scoreReducer';
 import { AppDispatch } from '../../store/store';

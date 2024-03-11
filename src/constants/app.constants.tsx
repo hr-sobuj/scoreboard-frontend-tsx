@@ -1,4 +1,4 @@
-export const baseUrl='http://localhost:5000/api/v1/';
+export const baseUrl='http://localhost:3300/api/v1/';
 
 /*
 |--------------------------------------------------------------------------
