@@ -3,8 +3,8 @@ import { FC, FormEvent, Fragment, forwardRef, useEffect, useState } from 'react'
 import { TiTimes } from 'react-icons/ti';
 import InputField from '../ui/input/InputField';
 import { useDispatch } from 'react-redux';
-import { updateScore } from '../../store/reducer/scoreReducer';
-import { AppDispatch } from '../../store/store';
+import { updateScore } from '../../store/features/scoreSlice';
+import { AppDispatch } from '../../store/app/store';
 import { CheckmarkIcon } from 'react-hot-toast';
 import { customToast } from '../../utilities/customToast';
 

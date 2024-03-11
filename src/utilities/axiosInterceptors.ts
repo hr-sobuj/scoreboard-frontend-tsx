@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshTokenUrl } from "../constants/app.constants";
-import { store } from "../store/store";
-import { deleteScore, updateScore } from "../store/reducer/scoreReducer";
+import { store } from "../store/app/store";
+import { deleteScore, updateScore } from "../store/features/scoreSlice";
 
 const axiosHttp = axios.create();
 

@@ -63,10 +63,10 @@ export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: U
 
 /*
 |--------------------------------------------------------------------------
-| Refressh token
+| Refresh token
 |--------------------------------------------------------------------------
 */
-export const refressToken = createAsyncThunk("auth/refressToken", async () => {
+export const refreshToken = createAsyncThunk("auth/refreshToken", async () => {
     try {
         const result = await axiosHttp.post(refreshTokenUrl);
         console.log(result);

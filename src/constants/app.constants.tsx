@@ -2,7 +2,7 @@ export const baseUrl='http://localhost:3300/api/v1/';
 
 /*
 |--------------------------------------------------------------------------
-| Userlogin related endpoint
+| User-login related endpoint
 |--------------------------------------------------------------------------
 */
 export const loginUrl=baseUrl+'auth/login';

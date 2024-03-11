@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from './../../assets/images/logo.png'
 import { useDispatch } from 'react-redux';
-import { logout } from '../../store/reducer/authReducer';
+import { logout } from '../../store/features/authSlice';
 import { useAuth } from '../../hooks/useAuth';
 
 const Navbar: React.FC = () => {

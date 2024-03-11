@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../store/store";
+import { AppDispatch } from "../store/app/store";
 import { useEffect } from "react";
-import { fetchScore } from "../store/reducer/scoreReducer";
+import { fetchScore } from "../store/features/scoreSlice";
 
 export const useScore = () => {
     const state: any = useSelector((state: any) => state.score);

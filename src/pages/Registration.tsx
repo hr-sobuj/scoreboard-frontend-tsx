@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { userRegistration } from '../store/reducer/authReducer';
+import { userRegistration } from '../store/features/authSlice';
 import Navbar from '../components/nav/Navbar';
-import { AppDispatch } from '../store/store';
+import { AppDispatch } from '../store/app/store';
 import toast, { CheckmarkIcon } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 

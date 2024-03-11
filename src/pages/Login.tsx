@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../store/reducer/authReducer';
+import { userLogin } from '../store/features/authSlice';
 import { Link, useNavigate, redirect } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
-import { AppDispatch } from '../store/store';
+import { AppDispatch } from '../store/app/store';
 import { useAuth } from '../hooks/useAuth';
 
 const Login: FC = () => {
