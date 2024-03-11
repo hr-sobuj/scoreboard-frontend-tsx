@@ -3,10 +3,10 @@ import { FC, FormEvent, Fragment, forwardRef, useEffect, useState } from 'react'
 import { TiTimes } from 'react-icons/ti';
 import InputField from '../ui/input/InputField';
 import { useDispatch } from 'react-redux';
-import { updateScore } from '../../store/features/scoreSlice';
 import { AppDispatch } from '../../store/app/store';
 import { CheckmarkIcon } from 'react-hot-toast';
 import { customToast } from '../../utilities/customToast';
+import { useUpdateScoreMutation } from '../../store/services/scoreService';
 
 interface ModalProps {
   isOpen: boolean,
@@ -23,7 +23,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   const [role, setRole] = useState<string>(score.role ?? '');
 
 
-  const dispatch = useDispatch<AppDispatch>();
+  const [updateScore] = useUpdateScoreMutation();
 
   const notify = customToast('Score updated successfully', <CheckmarkIcon />);
 
@@ -66,7 +66,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
       }
     };
 
-    dispatch(updateScore(obj));
+    updateScore(obj);
     closeModal();
     notify();
   };

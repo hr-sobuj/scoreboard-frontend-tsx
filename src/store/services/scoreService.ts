@@ -13,14 +13,30 @@ export const scoreApi = createApi({
             query: () => 'score/get/all/',
             providesTags: ['score'],
         }),
+        createScore: builder.mutation({
+            query: (obj) => ({
+                url: `score/create/`,
+                method: 'POST',
+                body: obj,
+            }),
+            invalidatesTags: ['score']
+        }),
         deleteScore: builder.mutation({
             query: (id) => ({
                 url: `score/delete/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['score']
+        }),
+        updateScore: builder.mutation({
+            query: (obj) => ({
+                url: `score/update/${obj.id}`,
+                method: 'PUT',
+                body: obj.data,
+            }),
+            invalidatesTags: ['score']
         })
     })
 });
 
-export const { useGetScoreQuery, useDeleteScoreMutation } = scoreApi;
+export const { useGetScoreQuery, useCreateScoreMutation, useDeleteScoreMutation, useUpdateScoreMutation } = scoreApi;

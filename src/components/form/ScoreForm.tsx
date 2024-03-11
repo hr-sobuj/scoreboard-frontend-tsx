@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/app/store';
 import { CheckmarkIcon } from 'react-hot-toast';
 import { customToast } from '../../utilities/customToast';
+import { useCreateScoreMutation } from '../../store/services/scoreService';
 
 interface formProps {
   pName?: string;
@@ -24,7 +25,7 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
   let [totalBall, setTotalBall] = useState<number>(pTotalBall || 0);
   let [role, setRole] = useState<string>(pRole || '');
 
-  const dispatch = useDispatch<AppDispatch>();
+  const [createScore] = useCreateScoreMutation();
 
   const notify = customToast('Score updated successfully', <CheckmarkIcon />);
 
@@ -54,7 +55,7 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
       totalBall,
       role
     };
-    dispatch(postScore(obj));
+    createScore(obj)
     notify();
   };
 

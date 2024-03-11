@@ -71,7 +71,6 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
                                             <button onClick={() => {
-                                                // const isDelete = confirm('Are you sure to delete?');
                                                 const isDelete = true;
                                                 if (isDelete) {
                                                     deleteScore(score._id);
