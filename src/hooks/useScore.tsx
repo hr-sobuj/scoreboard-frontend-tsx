@@ -2,11 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../store/app/store";
 import { useEffect } from "react";
 import { fetchScore } from "../store/features/scoreSlice";
+import { useGetScoreQuery } from "../store/services/scoreService";
 
 export const useScore = () => {
-    const state: any = useSelector((state: any) => state.score);
-
-    const { data, isLoading, error } = state;
+    const { data, isLoading, error } = useGetScoreQuery();
 
     const dispatch = useDispatch<AppDispatch>();
 

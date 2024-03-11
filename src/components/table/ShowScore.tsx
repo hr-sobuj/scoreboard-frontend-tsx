@@ -4,12 +4,13 @@ import { Tableprops } from "../../types/tableProps";
 import { useDispatch } from "react-redux";
 import { CiEdit } from "react-icons/ci";
 import CustomModal from "../modal/CustomModal";
-import { deleteScore } from "../../store/features/scoreSlice";
+// import { deleteScore } from "../../store/features/scoreSlice";
 import { TiDeleteOutline } from "react-icons/ti";
 import { AppDispatch } from "../../store/app/store";
 import { IoTrashOutline } from "react-icons/io5";
 import { useAuth } from "../../hooks/useAuth";
 import { customToast } from "../../utilities/customToast";
+import { useDeleteScoreMutation } from "../../store/services/scoreService";
 
 
 const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) => {
@@ -17,6 +18,7 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
     const [currentScore, setCurrentScore] = useState({})
 
     const currentUser = useAuth();
+    const [deleteScore] = useDeleteScoreMutation();
 
     const bowlersScores: ScoreType[] = data.filter((val: any) => val?.role === 'ball');
     const batsmenScores: ScoreType[] = data?.filter((val: any) => val?.role === 'bat');
@@ -72,7 +74,7 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
                                                 // const isDelete = confirm('Are you sure to delete?');
                                                 const isDelete = true;
                                                 if (isDelete) {
-                                                    dispatch(deleteScore(score._id));
+                                                    deleteScore(score._id);
                                                     notify();
                                                 }
                                             }}>

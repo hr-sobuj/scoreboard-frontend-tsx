@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
-import scoreReducer from "../features/scoreSlice";
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { scoreApi } from "../services/scoreService";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 const persistConfig = {
     key: 'root',
@@ -13,7 +13,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    score: scoreReducer,
     [scoreApi.reducerPath]: scoreApi.reducer,
 });
 
@@ -31,3 +30,5 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch
+
+setupListeners(store.dispatch);
