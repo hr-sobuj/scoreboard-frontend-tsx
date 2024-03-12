@@ -4,7 +4,7 @@ import ShowScore from "../table/ShowScore";
 export const CommonData = () => {
     const { isLoading, data, calculateOvers } = useScore();
     const orginalData=data?.data;
-    console.log(data)
+    // console.log(data);
     return (
         <>
             {isLoading && <p>Loading...</p>}

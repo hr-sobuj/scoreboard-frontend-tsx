@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/app/store";
 import { useEffect } from "react";
 import { fetchScore } from "../store/features/scoreSlice";
@@ -11,7 +11,7 @@ export const useScore = () => {
 
     useEffect(() => {
         dispatch(fetchScore());
-    }, []);
+    }, [dispatch]);
 
     const calculateOvers = (balls: number): string => {
         const overs = Math.floor(balls / 6);
