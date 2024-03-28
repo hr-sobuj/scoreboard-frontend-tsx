@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { userLogin } from '../store/features/authSlice';
-import { Link, useNavigate, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
 import { AppDispatch } from '../store/app/store';
 import { useAuth } from '../hooks/useAuth';
@@ -16,7 +16,7 @@ const Login: FC = () => {
         currentUser.username && navigate('/dashboard', { replace: true });
     }, [currentUser.username, navigate]);
 
-    const dispatch:any = useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

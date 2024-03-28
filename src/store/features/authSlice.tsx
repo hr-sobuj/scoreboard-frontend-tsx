@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { avatarUrl, loginUrl, refreshTokenUrl, registrationUrl } from "../../constants/app.constants";
 import { AuthTypes } from '../../types/authTypes';
-import { loginUrl, refreshTokenUrl, registrationUrl } from "../../constants/app.constants";
 import axiosHttp from "../../utilities/axiosInterceptors";
 
 
@@ -19,6 +19,8 @@ const initialState: AuthTypes = {
     accessToken: '',
     isLoading: false,
     error: '',
+    avatar: '',
+    role: ''
 }
 
 /*
@@ -52,6 +54,8 @@ export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: U
             const userData = {
                 username: userObject.username,
                 token: result?.data?.token,
+                avatar: result?.data?.avatar,
+                role: result?.data?.role
             }
             return userData;
         }
@@ -70,6 +74,21 @@ export const refreshToken = createAsyncThunk("auth/refreshToken", async () => {
     try {
         const result = await axiosHttp.post(refreshTokenUrl);
         console.log(result);
+    } catch (error: any) {
+        throw new Error(error.message)
+    }
+});
+
+/*
+|--------------------------------------------------------------------------
+| Avatar
+|--------------------------------------------------------------------------
+*/
+
+export const postProfileAvatar = createAsyncThunk("auth/avatar", async () => {
+    try {
+        const result = await axiosHttp.post(avatarUrl);
+        return result;
     } catch (error: any) {
         throw new Error(error.message)
     }
@@ -99,16 +118,21 @@ export const authSlice = createSlice({
             state.error = '';
         })
             .addCase(userLogin.fulfilled, (state, { payload }) => {
-                state.username = payload?.username || '';
+                state.username = payload?.username ?? '';
                 state.accessToken = payload?.token;
                 state.isLoading = false;
                 state.error = '';
+                state.avatar = payload?.avatar;
+                state.role = payload?.role;
             })
             .addCase(userLogin.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error.message || '';
+                state.error = action.error.message ?? '';
                 state.username = '';
                 state.accessToken = '';
+            })
+            .addCase(postProfileAvatar.fulfilled, (state, action) => {
+                console.log(action.payload);
             });
     }
 });

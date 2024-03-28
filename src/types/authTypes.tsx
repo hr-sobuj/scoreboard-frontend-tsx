@@ -4,4 +4,5 @@ export interface AuthTypes extends CommonTypes{
     username:string,
     accessToken:string,
     role?:string,
+    avatar?:string,
 }

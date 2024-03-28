@@ -8,6 +8,7 @@ export const baseUrl='http://localhost:3300/api/v1/';
 export const loginUrl=baseUrl+'auth/login';
 export const registrationUrl=baseUrl+'auth/registration';
 export const refreshTokenUrl=baseUrl+'auth/refresh-token';
+export const avatarUrl=baseUrl+'auth/upload/avatar';
 
 /*
 |--------------------------------------------------------------------------

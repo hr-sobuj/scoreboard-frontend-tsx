@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomePage from "../pages/Home";
-import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../pages/Dashboard";
+import HomePage from "../pages/Home";
 import Login from "../pages/Login";
-import Registration from "../pages/Registration";
 import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
+import Registration from "../pages/Registration";
+import Settings from "../pages/Settings";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +16,14 @@ export const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <ProtectedRoute><Dashboard /></ProtectedRoute>
+    },
+    {
+        path: '/profile',
+        element: <ProtectedRoute><Profile /></ProtectedRoute>
+    },
+    {
+        path: '/setting',
+        element: <ProtectedRoute><Settings /></ProtectedRoute>
     },
     {
         path: '/login',
