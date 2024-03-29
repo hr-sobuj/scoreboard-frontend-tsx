@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { avatarUrl, loginUrl, refreshTokenUrl, registrationUrl } from "../../constants/app.constants";
 import { AuthTypes } from '../../types/authTypes';
-import axiosHttp from "../../utilities/axiosInterceptors";
+import axiosHttp, { axiosFile } from "../../utilities/axiosInterceptors";
 
 
 /*
@@ -20,7 +20,8 @@ const initialState: AuthTypes = {
     isLoading: false,
     error: '',
     avatar: '',
-    role: ''
+    role: '',
+    id: ''
 }
 
 /*
@@ -50,12 +51,14 @@ export const userRegistration = createAsyncThunk("auth/UserRegistration", async 
 export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: UserObject) => {
     try {
         const result = await axiosHttp.post(loginUrl, userObject);
+        console.log(result)
         if (result.status === 200) {
             const userData = {
                 username: userObject.username,
                 token: result?.data?.token,
                 avatar: result?.data?.avatar,
-                role: result?.data?.role
+                role: result?.data?.role,
+                id: result?.data?.id
             }
             return userData;
         }
@@ -85,9 +88,16 @@ export const refreshToken = createAsyncThunk("auth/refreshToken", async () => {
 |--------------------------------------------------------------------------
 */
 
-export const postProfileAvatar = createAsyncThunk("auth/avatar", async () => {
+export const postProfileAvatar = createAsyncThunk("auth/avatar", async (formObj) => {
     try {
-        const result = await axiosHttp.post(avatarUrl);
+        const { id, formData } = formObj;
+        const result = await axiosFile.post(avatarUrl + id, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'credentials': 'include'
+            },
+        });
+        console.log(result);
         return result;
     } catch (error: any) {
         throw new Error(error.message)
@@ -124,6 +134,7 @@ export const authSlice = createSlice({
                 state.error = '';
                 state.avatar = payload?.avatar;
                 state.role = payload?.role;
+                state.id = payload?.id;
             })
             .addCase(userLogin.rejected, (state, action) => {
                 state.isLoading = false;
