@@ -18,7 +18,7 @@ export const CommonData = () => {
                     </div>
                 </>
             ) : (
-                <h3 className="text-center text-4xl text-red-600">Data not found!</h3>
+                !isLoading && <h3 className="text-center text-4xl text-red-600">Data not found!</h3>
             )}
         </>
     )

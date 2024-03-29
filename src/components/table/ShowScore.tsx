@@ -49,7 +49,6 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
     }
 
 
-
     return (
         <div>
             {isLoading && <p>Loading...</p>}
