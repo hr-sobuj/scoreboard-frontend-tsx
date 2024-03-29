@@ -5,7 +5,7 @@ import { fetchScore } from "../store/features/scoreSlice";
 import { useGetScoreQuery } from "../store/services/scoreService";
 
 export const useScore = () => {
-    const { data, isLoading, error } = useGetScoreQuery();
+    const { data, isLoading, error } = useGetScoreQuery(null);
 
     const dispatch = useDispatch<AppDispatch>();
 

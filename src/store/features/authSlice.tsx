@@ -88,21 +88,23 @@ export const refreshToken = createAsyncThunk("auth/refreshToken", async () => {
 |--------------------------------------------------------------------------
 */
 
-export const postProfileAvatar = createAsyncThunk("auth/avatar", async (formObj) => {
-    try {
-        const { id, formData } = formObj;
-        const result = await axiosFile.post(avatarUrl + id, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'credentials': 'include'
-            },
-        });
-        return result?.data?.result;
-    } catch (error: any) {
-        throw new Error(error.message)
+export const postProfileAvatar = createAsyncThunk(
+    "auth/avatar",
+    async (formObj: { id: string; formData: FormData; }, thunkAPI): Promise<any> => {
+        try {
+            const { id, formData } = formObj;
+            const result = await axiosFile.post(avatarUrl + id, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'credentials': 'include'
+                },
+            });
+            return result.data.result;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
     }
-});
-
+);
 
 /*
 |--------------------------------------------------------------------------
