@@ -4,7 +4,6 @@ import { IoIosMenu } from "react-icons/io";
 import { LiaTimesSolid } from "react-icons/lia";
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/images/logo.png';
 import { useAuth } from '../../hooks/useAuth';
 import { logout } from '../../store/features/authSlice';
 
@@ -25,7 +24,7 @@ const Navbar: React.FC = () => {
               <div className="flex items-center">
                 <h1>
                   <Link to='/'>
-                    <img src={Logo || "https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"} alt="Logo" role='img' className="h-8 mr-4" />
+                    <img src={"https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"} alt="Logo" role='img' className="h-8 mr-4" />
                   </Link>
                 </h1>
                 <div className="hidden sm:block sm:ml-6">
