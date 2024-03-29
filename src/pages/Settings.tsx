@@ -9,7 +9,7 @@ const Settings: React.FC = () => {
     const { avatar, id } = useAuth();
     const [newPicture, setNewPicture] = useState<string>('');
     const dispatch = useDispatch();
-    console.log(avatar)
+
 
     const handlePictureChange = (e) => {
         e.preventDefault();
@@ -17,6 +17,7 @@ const Settings: React.FC = () => {
         formData.append('file', newPicture);
 
         dispatch(postProfileAvatar({ formData, id }));
+        setNewPicture('');
     };
 
     return (
