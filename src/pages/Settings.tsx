@@ -13,7 +13,6 @@ const Settings: React.FC = () => {
 
     const handlePictureChange = (e) => {
         e.preventDefault();
-        console.log(id);
         const formData = new FormData();
         formData.append('file', newPicture);
 

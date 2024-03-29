@@ -97,8 +97,7 @@ export const postProfileAvatar = createAsyncThunk("auth/avatar", async (formObj)
                 'credentials': 'include'
             },
         });
-        console.log(result);
-        return result;
+        return result?.data?.result;
     } catch (error: any) {
         throw new Error(error.message)
     }
@@ -143,7 +142,7 @@ export const authSlice = createSlice({
                 state.accessToken = '';
             })
             .addCase(postProfileAvatar.fulfilled, (state, action) => {
-                console.log(action.payload);
+                state.avatar = action.payload.avatar
             });
     }
 });
