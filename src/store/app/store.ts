@@ -1,14 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer from "../features/authSlice";
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import { scoreApi } from "../services/scoreService";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import authReducer from "../features/authSlice";
+import { scoreApi } from "../services/scoreService";
 
 const persistConfig = {
     key: 'root',
     storage,
-    version:1,
+    version: 1,
 }
 
 const rootReducer = combineReducers({

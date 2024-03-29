@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/app/store";
-import { useEffect } from "react";
 import { fetchScore } from "../store/features/scoreSlice";
 import { useGetScoreQuery } from "../store/services/scoreService";
 

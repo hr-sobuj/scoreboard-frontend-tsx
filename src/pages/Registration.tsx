@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useState } from 'react';
+import toast, { CheckmarkIcon } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { userRegistration } from '../store/features/authSlice';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
 import { AppDispatch } from '../store/app/store';
-import toast, { CheckmarkIcon } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { userRegistration } from '../store/features/authSlice';
 
 const Registration: FC = () => {
     const [username, setUsername] = useState('');

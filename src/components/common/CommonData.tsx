@@ -3,12 +3,12 @@ import ShowScore from "../table/ShowScore";
 
 export const CommonData = () => {
     const { isLoading, data, calculateOvers } = useScore();
-    const orginalData=data?.data;
+    const orginalData = data?.data;
     // console.log(data);
     return (
         <>
             {isLoading && <p>Loading...</p>}
-            {orginalData?.length? (
+            {orginalData?.length ? (
                 <>
                     <div className="mb-8">
                         <ShowScore name="Batsman" data={orginalData} calculateOvers={calculateOvers} flag='bat' />
@@ -17,7 +17,7 @@ export const CommonData = () => {
                         <ShowScore name="Bowler" data={orginalData} calculateOvers={calculateOvers} flag='ball' />
                     </div>
                 </>
-            ):(
+            ) : (
                 <>
                     <h3 className="text-center text-4xl text-red-600">Data not found!</h3>
                 </>

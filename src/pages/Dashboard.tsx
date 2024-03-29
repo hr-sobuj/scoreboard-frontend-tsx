@@ -1,7 +1,7 @@
 import { FC } from "react";
-import Navbar from "../components/nav/Navbar";
-import ScoreForm from "../components/form/ScoreForm";
 import { CommonData } from "../components/common/CommonData";
+import ScoreForm from "../components/form/ScoreForm";
+import Navbar from "../components/nav/Navbar";
 
 const Dashboard: FC = () => {
     return (

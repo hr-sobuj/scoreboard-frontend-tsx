@@ -1,6 +1,6 @@
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 
-export const customToast = (msg: string, icon: any ) => {
+export const customToast = (msg: string, icon: any) => {
     return () => toast(msg, {
         position: 'top-right',
         icon,

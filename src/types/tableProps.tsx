@@ -1,6 +1,6 @@
 export interface Tableprops {
-    name:string,
+    name: string,
     data: object,
     calculateOvers: Function,
-    flag:string,
+    flag: string,
 }

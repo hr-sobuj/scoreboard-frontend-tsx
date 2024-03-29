@@ -1,20 +1,18 @@
 import { FC, useState } from "react";
+import { CiEdit } from "react-icons/ci";
 import { ScoreType } from "../../types/scoreTypes";
 import { Tableprops } from "../../types/tableProps";
-import { useDispatch } from "react-redux";
-import { CiEdit } from "react-icons/ci";
 import CustomModal from "../modal/CustomModal";
 // import { deleteScore } from "../../store/features/scoreSlice";
-import { TiDeleteOutline } from "react-icons/ti";
-import { AppDispatch } from "../../store/app/store";
 import { IoTrashOutline } from "react-icons/io5";
+import { TiDeleteOutline } from "react-icons/ti";
 import { useAuth } from "../../hooks/useAuth";
-import { customToast } from "../../utilities/customToast";
 import { useDeleteScoreMutation } from "../../store/services/scoreService";
+import { customToast } from "../../utilities/customToast";
 
 
 const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) => {
-    let [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [currentScore, setCurrentScore] = useState({})
 
     const currentUser = useAuth();
@@ -25,7 +23,6 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
 
     const currentScoreShow = flag === 'bat' ? batsmenScores : bowlersScores;
 
-    const dispatch = useDispatch<AppDispatch>();
     const notify = () => customToast('Score is deleted!', <IoTrashOutline />)
 
     function closeModal() {

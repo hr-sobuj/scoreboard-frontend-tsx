@@ -1,11 +1,8 @@
 import { FC, FormEvent, useState } from 'react';
-import InputField from '../ui/input/InputField';
-import { postScore } from '../../store/features/scoreSlice';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/app/store';
 import { CheckmarkIcon } from 'react-hot-toast';
-import { customToast } from '../../utilities/customToast';
 import { useCreateScoreMutation } from '../../store/services/scoreService';
+import { customToast } from '../../utilities/customToast';
+import InputField from '../ui/input/InputField';
 
 interface formProps {
   pName?: string;
@@ -17,13 +14,13 @@ interface formProps {
 }
 
 const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRole }) => {
-  
-  let [name, setName] = useState<string>(pName || '');
-  let [b4, setB4] = useState<number>(pB4 || 0);
-  let [b6, setB6] = useState<number>(pB6 || 0);
-  let [totalRun, setTotalRun] = useState<number>(pTotalRun || 0);
-  let [totalBall, setTotalBall] = useState<number>(pTotalBall || 0);
-  let [role, setRole] = useState<string>(pRole || '');
+
+  const [name, setName] = useState<string>(pName || '');
+  const [b4, setB4] = useState<number>(pB4 || 0);
+  const [b6, setB6] = useState<number>(pB6 || 0);
+  const [totalRun, setTotalRun] = useState<number>(pTotalRun || 0);
+  const [totalBall, setTotalBall] = useState<number>(pTotalBall || 0);
+  const [role, setRole] = useState<string>(pRole || '');
 
   const [createScore] = useCreateScoreMutation();
 

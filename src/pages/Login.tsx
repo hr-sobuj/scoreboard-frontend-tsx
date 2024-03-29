@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { userLogin } from '../store/features/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
-import { AppDispatch } from '../store/app/store';
 import { useAuth } from '../hooks/useAuth';
+import { AppDispatch } from '../store/app/store';
+import { userLogin } from '../store/features/authSlice';
 
 const Login: FC = () => {
     const [username, setUsername] = useState('');

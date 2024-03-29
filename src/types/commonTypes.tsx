@@ -1,4 +1,4 @@
-export interface CommonTypes{
-    isLoading:boolean,
-    error:string,
+export interface CommonTypes {
+    isLoading: boolean,
+    error: string,
 }
