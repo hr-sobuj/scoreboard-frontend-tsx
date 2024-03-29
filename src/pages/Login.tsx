@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/nav/Navbar';
 import { useAuth } from '../hooks/useAuth';
@@ -18,12 +18,14 @@ const Login: FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
 
+    const isLoading = useSelector((state: any) => state.auth.isLoading);
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const userObject = {
-            username, password
+            username,
+            password
         }
-
         dispatch(userLogin(userObject));
     };
 
@@ -89,12 +91,22 @@ const Login: FC = () => {
                         </div>
 
                         <div>
-                            <button
-                                type="submit"
-                                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                                Sign in
-                            </button>
+                            {/* Conditionally render login button based on isLoading state */}
+                            {!isLoading ? (
+                                <button
+                                    type="submit"
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                >
+                                    Sign in
+                                </button>
+                            ) : (
+                                <button
+                                    disabled
+                                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 cursor-not-allowed"
+                                >
+                                    Loading...
+                                </button>
+                            )}
                         </div>
                     </form>
                 </div>

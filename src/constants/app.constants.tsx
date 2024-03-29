@@ -1,4 +1,5 @@
-export const baseUrl = 'http://localhost:3300/api/v1/';
+// export const baseUrl = 'http://localhost:3300/api/v1/';
+export const baseUrl = 'https://scoreboard-api-rho.vercel.app/api/v1/';
 
 /*
 |--------------------------------------------------------------------------

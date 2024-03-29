@@ -1,8 +1,10 @@
 import { FC, FormEvent, useState } from 'react';
 import { CheckmarkIcon } from 'react-hot-toast';
+import { RiLoader4Line } from 'react-icons/ri';
 import { useCreateScoreMutation } from '../../store/services/scoreService';
 import { customToast } from '../../utilities/customToast';
 import InputField from '../ui/input/InputField';
+import { FaExclamationCircle } from 'react-icons/fa';
 
 interface formProps {
   pName?: string;
@@ -22,11 +24,12 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
   const [totalBall, setTotalBall] = useState<number>(pTotalBall || 0);
   const [role, setRole] = useState<string>(pRole || '');
 
-  const [createScore] = useCreateScoreMutation();
+  const [createScore, { isLoading }] = useCreateScoreMutation();
 
-  const notify = customToast('Score updated successfully', <CheckmarkIcon />);
+  const notifyLoading = customToast('Loading...', <RiLoader4Line />);
+  const notifyUpdated = customToast('Score updated successfully', <CheckmarkIcon />);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!name.trim()) {
@@ -52,9 +55,20 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
       totalBall,
       role
     };
-    createScore(obj)
-    notify();
+    notifyLoading();
+
+    try {
+      await createScore(obj).unwrap();
+      if (!isLoading) {
+        notifyUpdated();
+      }
+    } catch (error) {
+
+      customToast('Operation failed!', <FaExclamationCircle />)
+    }
   };
+
+
 
 
   return (
@@ -94,14 +108,19 @@ const ScoreForm: FC<formProps> = ({ pName, pB4, pB6, pTotalRun, pTotalBall, pRol
         </select>
       </div>
       <div className="flex items-center justify-center">
-        <button
+        {isLoading ? (<button
+          disabled
+          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-400 cursor-not-allowed"
+        >
+          Loading...
+        </button>) : (<button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
         >
           Add New Record
-        </button>
+        </button>)}
       </div>
-    </form>
+    </form >
   );
 };
 

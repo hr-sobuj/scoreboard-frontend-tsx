@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { FC, FormEvent, Fragment, useEffect, useState } from 'react';
 import { CheckmarkIcon } from 'react-hot-toast';
+import { FaExclamationCircle } from 'react-icons/fa';
 import { TiTimes } from 'react-icons/ti';
 import { useUpdateScoreMutation } from '../../store/services/scoreService';
 import { customToast } from '../../utilities/customToast';
@@ -20,10 +21,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
   const [totalBall, setTotalBall] = useState<number>(score?.totalBall ?? 0);
   const [role, setRole] = useState<string>(score.role ?? '');
 
-
-  const [updateScore] = useUpdateScoreMutation();
-
-  const notify = customToast('Score updated successfully', <CheckmarkIcon />);
+  const [updateScore, { isLoading }] = useUpdateScoreMutation();
 
   useEffect(() => {
     setName(score?.name || '');
@@ -34,7 +32,7 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
     setRole(score?.role || '');
   }, [score]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!name.trim()) {
@@ -52,21 +50,25 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
       return;
     }
 
-    const obj = {
-      id: score._id,
-      data: {
-        name,
-        b4,
-        b6,
-        totalRun,
-        totalBall,
-        role
-      }
-    };
+    try {
+      await updateScore({
+        id: score._id,
+        data: {
+          name,
+          b4,
+          b6,
+          totalRun,
+          totalBall,
+          role
+        }
+      });
 
-    updateScore(obj);
-    closeModal();
-    notify();
+      customToast('Score updated successfully', <CheckmarkIcon />);
+      closeModal();
+    } catch (error) {
+      console.error('Error updating score:', error);
+      customToast('Operation failed!', <FaExclamationCircle />);
+    }
   };
 
   return (
@@ -120,7 +122,6 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
                     </div>
                     <div className="mb-4 grid grid-cols-2 gap-4">
                       <div>
-                        {/* <input type="text" /> */}
                         <InputField label="Number of 4" type='number' placeholder='Number of 4' name='b4' value={b4} handleChange={setB4} />
                       </div>
                       <div>
@@ -154,8 +155,9 @@ const CustomModal: FC<ModalProps> = ({ isOpen, score, closeModal }) => {
                       <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit"
+                        disabled={isLoading}
                       >
-                        Update Record
+                        {isLoading ? 'Updating...' : 'Update Record'}
                       </button>
                     </div>
                   </form>

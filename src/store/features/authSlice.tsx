@@ -51,7 +51,7 @@ export const userRegistration = createAsyncThunk("auth/UserRegistration", async 
 export const userLogin = createAsyncThunk("auth/UserLogin", async (userObject: UserObject) => {
     try {
         const result = await axiosHttp.post(loginUrl, userObject);
-        console.log(result)
+
         if (result.status === 200) {
             const userData = {
                 username: userObject.username,

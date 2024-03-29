@@ -1,14 +1,15 @@
 import { FC, useState } from "react";
+import { CheckmarkIcon } from "react-hot-toast";
 import { CiEdit } from "react-icons/ci";
-import { ScoreType } from "../../types/scoreTypes";
-import { Tableprops } from "../../types/tableProps";
-import CustomModal from "../modal/CustomModal";
-// import { deleteScore } from "../../store/features/scoreSlice";
-import { IoTrashOutline } from "react-icons/io5";
+import { FaExclamationCircle } from 'react-icons/fa';
+import { IoTrashBinSharp } from 'react-icons/io5';
 import { TiDeleteOutline } from "react-icons/ti";
 import { useAuth } from "../../hooks/useAuth";
 import { useDeleteScoreMutation } from "../../store/services/scoreService";
+import { ScoreType } from "../../types/scoreTypes";
+import { Tableprops } from "../../types/tableProps";
 import { customToast } from "../../utilities/customToast";
+import CustomModal from "../modal/CustomModal";
 
 
 const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) => {
@@ -16,14 +17,17 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
     const [currentScore, setCurrentScore] = useState({})
 
     const currentUser = useAuth();
-    const [deleteScore] = useDeleteScoreMutation();
+    const [deleteScore, { isLoading }] = useDeleteScoreMutation();
 
     const bowlersScores: ScoreType[] = data.filter((val: any) => val?.role === 'ball');
     const batsmenScores: ScoreType[] = data?.filter((val: any) => val?.role === 'bat');
 
     const currentScoreShow = flag === 'bat' ? batsmenScores : bowlersScores;
 
-    const notify = () => customToast('Score is deleted!', <IoTrashOutline />)
+
+    const notifyLoading = () => customToast('Loading...', <IoTrashBinSharp />)
+    const notifySuccess = () => customToast('Score deleted successfully!', <CheckmarkIcon />)
+
 
     function closeModal() {
         setIsOpen(false)
@@ -34,8 +38,21 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
         setIsOpen(true)
     }
 
+    async function onDelete(id: any) {
+        notifyLoading();
+        try {
+            await deleteScore(id);
+            if (!isLoading) notifySuccess();
+        } catch (error) {
+            customToast('Operation failed!', <FaExclamationCircle />);
+        }
+    }
+
+
+
     return (
         <div>
+            {isLoading && <p>Loading...</p>}
             <h2 className="text-3xl font-bold text-center mb-4">{name} Scoreboard</h2>
             <div className="overflow-x-auto">
                 <table className="w-full border-collapse border border-gray-300">
@@ -68,11 +85,7 @@ const ShowScore: FC<Tableprops> = ({ name, data, calculateOvers, flag }: any) =>
                                                 <CiEdit className="w-6 h-6 text-lime-900" />
                                             </button>
                                             <button onClick={() => {
-                                                const isDelete = true;
-                                                if (isDelete) {
-                                                    deleteScore(score._id);
-                                                    notify();
-                                                }
+                                                return onDelete(score._id)
                                             }}>
                                                 <TiDeleteOutline className="w-6 h-6 text-red-600" />
                                             </button>
