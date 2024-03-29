@@ -37,9 +37,14 @@ const Navbar: React.FC = () => {
                         Dashboard
                       </Link>
                     ) : (
-                      <Link to="/login" className="text-white hover:text-gray-300">
-                        Login
-                      </Link>
+                      <>
+                        <Link to="/login" className="text-white hover:text-gray-300">
+                          Login
+                        </Link>
+                        <Link to="/registration" className="text-white hover:text-gray-300">
+                          Registration
+                        </Link>
+                      </>
                     )}
                   </div>
                 </div>
