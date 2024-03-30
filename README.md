@@ -1,30 +1,78 @@
-# React + TypeScript + Vite
+# Scoreboard Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Scoreboard Management System repository! This project provides a comprehensive solution for managing scores efficiently, featuring both frontend and backend components.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Authentication System:** Secure user authentication for seamless access control.
+- **Score Management:** Add, view, update, and delete scores effortlessly.
+- **Admin Dashboard:** A centralized dashboard empowering admins to manipulate scores effortlessly.
+- **Admin Profile:** Personalized profiles for administrators.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Backend
 
-- Configure the top-level `parserOptions` property like this:
+- JavaScript
+- TypeScript
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- Multer
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Frontend
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- JavaScript
+- TypeScript
+- React.js
+- Redux
+- Redux Toolkit
+- Redux RTK Query
+- Tailwind CSS
+
+## Description
+
+This project might appear simple, but it incorporates a wide range of technologies and adheres to solid project structure principles. We've followed the DRY (Don't Repeat Yourself) code principle throughout the development process. Moreover, it's an open-source project, welcoming contributions from the community.
+
+## Installation
+
+Follow these steps to set up the project locally:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/hr-sobuj/scoreboard-api.git
+   git clone https://github.com/hr-sobuj/scoreboard-frontend-tsx.git
+   ```
+
+2. Install dependencies using npm:
+
+   ```bash
+   cd scoreboard-api
+   npm install
+   cd ../scoreboard-frontend-tsx
+   npm install
+   ```
+
+   Alternatively, you can use yarn:
+
+   ```bash
+   cd scoreboard-api
+   yarn install
+   cd ../scoreboard-frontend-tsx
+   yarn install
+   ```
+
+## Login Credentials
+
+- **Username:** habibur
+- **Password:** Admin123#
+
+Feel free to explore, contribute, and enhance your scoreboard management experience with us!
+
+---
+
+**Author:** Habibur Rahman
+
+**License:** This project is licensed under the [MIT License](LICENSE).
